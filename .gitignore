@@ -1,0 +1,5 @@
+node_modules
+dist
+.DS_Store
+# Private class content (teacher's material): never published until approved
+public/content/packs/
