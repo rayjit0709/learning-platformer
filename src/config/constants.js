@@ -21,3 +21,13 @@ export const GAME = {
 
 // Friendly, round-looking system fonts (no download needed, works offline).
 export const FONT = '"Trebuchet MS", "Segoe UI", Verdana, Arial, sans-serif';
+
+// Learning part
+export const QUIZ = {
+  stationDifficulties: [1, 2, 2, 3], // one question per station: easy to harder
+  gated: true, // a gate blocks the way until the question is answered
+  pointsFirstTry: 50,
+  pointsLater: 20,
+  blockSize: 84,
+  blockSpacing: 112,
+};

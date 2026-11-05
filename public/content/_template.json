@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "level": "primaire-c2",
+    "subject": "math",
+    "topic": "my-topic",
+    "reviewed": false,
+    "note": "Copy this file into public/content/<level>/<subject>/ and rename it. Files starting with _ are ignored."
+  },
+  "questions": [
+    {
+      "id": "unique-id-001",
+      "type": "multiple-choice",
+      "difficulty": 1,
+      "prompt": { "fr": "Question en français ?", "en": "Question in English?" },
+      "choices": ["Réponse A", "Réponse B", "Réponse C"],
+      "answer": 0,
+      "hint": { "fr": "Un petit indice.", "en": "A little hint." }
+    }
+  ]
+}

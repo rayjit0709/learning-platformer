@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "node scripts/validate-content.js && vite build",
+    "preview": "vite preview",
+    "content": "node scripts/validate-content.js"
   },
   "dependencies": {
     "phaser": "^4.2.1"

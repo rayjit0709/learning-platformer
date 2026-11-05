@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "level": "primaire-c2",
+    "subject": "math",
+    "topic": "addition-subtraction",
+    "reviewed": false,
+    "note": "Draft written by Claude. To be checked by a teacher or parent before wider use."
+  },
+  "questions": [
+    {
+      "id": "c2-math-001", "type": "multiple-choice", "difficulty": 1,
+      "prompt": { "fr": "Combien font 3 + 4 ?", "en": "What is 3 + 4?" },
+      "choices": [6, 7, 8], "answer": 1,
+      "hint": { "fr": "Compte sur tes doigts : 3, puis 4 de plus.", "en": "Count on your fingers: 3, then 4 more." }
+    },
+    {
+      "id": "c2-math-002", "type": "multiple-choice", "difficulty": 1,
+      "prompt": { "fr": "Combien font 5 + 5 ?", "en": "What is 5 + 5?" },
+      "choices": [9, 10, 11], "answer": 1,
+      "hint": { "fr": "Pense à tes deux mains : 5 doigts + 5 doigts.", "en": "Think of your two hands: 5 fingers + 5 fingers." }
+    },
+    {
+      "id": "c2-math-003", "type": "multiple-choice", "difficulty": 1,
+      "prompt": { "fr": "Combien font 8 − 3 ?", "en": "What is 8 − 3?" },
+      "choices": [4, 5, 6], "answer": 1,
+      "hint": { "fr": "Pars de 8 et recule de 3 : 7, 6, 5.", "en": "Start at 8 and count back 3: 7, 6, 5." }
+    },
+    {
+      "id": "c2-math-004", "type": "multiple-choice", "difficulty": 1,
+      "prompt": { "fr": "Arun a 6 mangues. On lui en donne 2 de plus. Combien en a-t-il ?", "en": "Arun has 6 mangoes. He is given 2 more. How many does he have?" },
+      "choices": [7, 8, 9], "answer": 1,
+      "hint": { "fr": "Ajoute : 6 + 2.", "en": "Add them up: 6 + 2." }
+    },
+    {
+      "id": "c2-math-005", "type": "multiple-choice", "difficulty": 1,
+      "prompt": { "fr": "Combien font 10 − 4 ?", "en": "What is 10 − 4?" },
+      "choices": [5, 6, 7], "answer": 1,
+      "hint": { "fr": "Tu as 10 doigts levés et tu en baisses 4. Combien restent levés ?", "en": "You hold up 10 fingers and fold down 4. How many are still up?" }
+    },
+    {
+      "id": "c2-math-006", "type": "multiple-choice", "difficulty": 2,
+      "prompt": { "fr": "Combien font 12 + 7 ?", "en": "What is 12 + 7?" },
+      "choices": [18, 19, 20], "answer": 1,
+      "hint": { "fr": "Garde le 12 et ajoute les unités : 2 + 7 = 9, donc 19.", "en": "Keep the 12 and add the ones: 2 + 7 = 9, so 19." }
+    },
+    {
+      "id": "c2-math-007", "type": "multiple-choice", "difficulty": 2,
+      "prompt": { "fr": "Combien font 25 + 10 ?", "en": "What is 25 + 10?" },
+      "choices": [34, 35, 45], "answer": 1,
+      "hint": { "fr": "Ajouter 10, c'est ajouter une dizaine : 2 dizaines deviennent 3 dizaines.", "en": "Adding 10 adds one ten: 2 tens become 3 tens." }
+    },
+    {
+      "id": "c2-math-008", "type": "multiple-choice", "difficulty": 2,
+      "prompt": { "fr": "Combien font 18 − 9 ?", "en": "What is 18 − 9?" },
+      "choices": [8, 9, 10], "answer": 1,
+      "hint": { "fr": "18 − 10 = 8, puis ajoute 1 car tu as enlevé 1 de trop.", "en": "18 − 10 = 8, then add 1 because you took away 1 too many." }
+    },
+    {
+      "id": "c2-math-009", "type": "multiple-choice", "difficulty": 2,
+      "prompt": { "fr": "Combien font 30 + 20 ?", "en": "What is 30 + 20?" },
+      "choices": [40, 50, 60], "answer": 1,
+      "hint": { "fr": "3 dizaines + 2 dizaines = 5 dizaines.", "en": "3 tens + 2 tens = 5 tens." }
+    },
+    {
+      "id": "c2-math-010", "type": "multiple-choice", "difficulty": 2,
+      "prompt": { "fr": "Il y a 45 oiseaux dans l'arbre. 5 s'envolent. Combien en reste-t-il ?", "en": "There are 45 birds in the tree. 5 fly away. How many are left?" },
+      "choices": [35, 40, 41], "answer": 1,
+      "hint": { "fr": "Enlève les 5 unités : il reste 4 dizaines.", "en": "Take away the 5 ones: 4 tens are left." }
+    },
+    {
+      "id": "c2-math-011", "type": "multiple-choice", "difficulty": 3,
+      "prompt": { "fr": "Combien font 27 + 15 ?", "en": "What is 27 + 15?" },
+      "choices": [32, 41, 42], "answer": 2,
+      "hint": { "fr": "27 + 3 = 30, puis 30 + 12 = 42.", "en": "27 + 3 = 30, then 30 + 12 = 42." }
+    },
+    {
+      "id": "c2-math-012", "type": "multiple-choice", "difficulty": 3,
+      "prompt": { "fr": "Combien font 50 − 18 ?", "en": "What is 50 − 18?" },
+      "choices": [28, 32, 38], "answer": 1,
+      "hint": { "fr": "50 − 20 = 30, puis ajoute 2 : 32.", "en": "50 − 20 = 30, then add 2: 32." }
+    },
+    {
+      "id": "c2-math-013", "type": "multiple-choice", "difficulty": 3,
+      "prompt": { "fr": "Meena a 36 mangues et en cueille 28 de plus. Combien en a-t-elle ?", "en": "Meena has 36 mangoes and picks 28 more. How many does she have?" },
+      "choices": [54, 64, 74], "answer": 1,
+      "hint": { "fr": "36 + 30 = 66, puis enlève 2 : 64.", "en": "36 + 30 = 66, then take away 2: 64." }
+    },
+    {
+      "id": "c2-math-014", "type": "multiple-choice", "difficulty": 3,
+      "prompt": { "fr": "Combien font 73 − 40 ?", "en": "What is 73 − 40?" },
+      "choices": [23, 33, 43], "answer": 1,
+      "hint": { "fr": "7 dizaines − 4 dizaines = 3 dizaines, et les 3 unités restent.", "en": "7 tens − 4 tens = 3 tens, and the 3 ones stay." }
+    },
+    {
+      "id": "c2-math-015", "type": "multiple-choice", "difficulty": 3,
+      "prompt": { "fr": "Combien font 48 + 17 ?", "en": "What is 48 + 17?" },
+      "choices": [55, 65, 75], "answer": 1,
+      "hint": { "fr": "48 + 2 = 50, puis 50 + 15 = 65.", "en": "48 + 2 = 50, then 50 + 15 = 65." }
+    }
+  ]
+}

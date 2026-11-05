@@ -1,10 +1,15 @@
 import Phaser from 'phaser';
-import { GAME_WIDTH, GAME_HEIGHT, PLAYER, GAME } from '../config/constants.js';
+import { GAME_WIDTH, GAME_HEIGHT, PLAYER, GAME, QUIZ, FONT } from '../config/constants.js';
 import { LEVEL_1 } from '../game/levelData.js';
 import TouchControls from '../ui/TouchControls.js';
 import { HEROES, chosenHero } from '../config/heroes.js';
 import Hud from '../ui/Hud.js';
 import { showEndPanel } from '../ui/EndPanel.js';
+import QuestionBanner from '../ui/QuestionBanner.js';
+import QuestionStation from '../game/QuestionStation.js';
+import { QUESTIONS_KEY, QUESTIONS_URL } from '../config/content.js';
+import { isValidQuestionFile, pickQuestions, prepareQuestion } from '../content/questions.js';
+import { t } from '../i18n/index.js';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -13,6 +18,7 @@ export default class GameScene extends Phaser.Scene {
 
   preload() {
     for (const hero of Object.values(HEROES)) this.load.image(hero.textureKey, hero.url);
+    this.load.json(QUESTIONS_KEY, QUESTIONS_URL);
   }
 
   create() {
@@ -23,14 +29,20 @@ export default class GameScene extends Phaser.Scene {
     this.state = 'playing'; // 'playing' | 'won' | 'lost'
     this.score = 0;
     this.lives = GAME.lives;
+    this.checkpoint = { ...this.level.start }; // where to restart after a fall
+    this.flashText = ''; // short message shown in the banner after a right answer
+    this.flashUntil = 0;
+    this.quizStats = { total: 0, firstTry: 0 };
 
     this.buildPlatforms();
     this.buildPlayer();
+    this.buildStations();
     this.buildCoins();
     this.buildFlag();
     this.buildControls();
     this.hud = new Hud(this, GAME_WIDTH);
     this.hud.update(this.score, this.lives);
+    this.banner = new QuestionBanner(this);
 
     // The camera follows the player through a level wider than the screen.
     this.physics.world.setBounds(0, 0, this.level.width, GAME_HEIGHT * 2);
@@ -62,6 +74,61 @@ export default class GameScene extends Phaser.Scene {
     this.player.body.setOffset((picW - hitW) / 2, picH - hitH - 8); // feet sit on the platform
     this.player.body.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, this.platforms);
+  }
+
+  // Question stations: blocks to jump into, one question each, taken from the JSON file.
+  buildStations() {
+    this.stations = [];
+    this.contentError = false;
+    const data = this.cache.json.get(QUESTIONS_KEY);
+    if (!isValidQuestionFile(data)) {
+      this.contentError = true; // the level stays playable, without questions
+      return;
+    }
+    const raw = pickQuestions(data.questions, QUIZ.stationDifficulties);
+    this.level.stations.slice(0, raw.length).forEach((def, i) => {
+      const station = new QuestionStation(this, def, prepareQuestion(raw[i]), this.level.flag.groundY);
+      this.stations.push(station);
+      // Hitting a block from below (head first) gives an answer
+      this.physics.add.collider(this.player, station.blocks, (player, block) => {
+        if (player.body.touching.up && player.y > block.y) station.hit(block);
+      });
+      if (station.gate) this.physics.add.collider(this.player, station.gate);
+    });
+    this.quizStats.total = this.stations.length;
+  }
+
+  // Called by a station when its question is answered correctly
+  onQuestionSolved(station, block) {
+    const firstTry = station.attempts === 0;
+    const points = firstTry ? QUIZ.pointsFirstTry : QUIZ.pointsLater;
+    this.score += points;
+    if (firstTry) this.quizStats.firstTry += 1;
+    this.hud.update(this.score, this.lives);
+    this.checkpoint = { x: station.gateX + 80, y: 420 }; // a fall restarts after this gate
+    this.flashText = t('q.correct');
+    this.flashUntil = this.time.now + 1600;
+
+    const popup = this.add.text(block.x, block.y - 60, `+${points}`, {
+      fontFamily: FONT, fontSize: '36px', fontStyle: 'bold', color: '#fefcbf', stroke: '#744210', strokeThickness: 5,
+    }).setOrigin(0.5).setDepth(50);
+    this.tweens.add({ targets: popup, y: popup.y - 60, alpha: 0, duration: 1200, onComplete: () => popup.destroy() });
+  }
+
+  // Shows the question of the station the player is near (or a message), else nothing
+  refreshBanner() {
+    if (this.contentError) {
+      this.banner.show(t('error.content'), '', '#c05621');
+      return;
+    }
+    if (this.time.now < this.flashUntil) {
+      this.banner.show(this.flashText, '', '#2f855a');
+      return;
+    }
+    const x = this.player.x;
+    const active = this.stations.find((s) => !s.solved && s.containsX(x));
+    if (active) this.banner.show(active.question.prompt, active.note);
+    else this.banner.hide();
   }
 
   buildCoins() {
@@ -100,7 +167,7 @@ export default class GameScene extends Phaser.Scene {
       this.endTry('lost');
       return;
     }
-    this.player.setPosition(this.level.start.x, this.level.start.y);
+    this.player.setPosition(this.checkpoint.x, this.checkpoint.y);
     this.player.body.setVelocity(0, 0);
     this.cameras.main.shake(150, 0.004);
   }
@@ -112,7 +179,10 @@ export default class GameScene extends Phaser.Scene {
     this.player.body.setVelocity(0, 0);
     this.player.body.enable = false; // freeze the character
     this.player.setAngle(0);
-    showEndPanel(this, kind, this.score, () => this.scene.restart());
+    const { total, firstTry } = this.quizStats;
+    const quizLine = kind === 'won' && total > 0 ? t('win.quiz', { ok: firstTry, total }) : '';
+    this.banner.hide();
+    showEndPanel(this, kind, this.score, quizLine, () => this.scene.restart());
   }
 
   buildControls() {
@@ -124,6 +194,7 @@ export default class GameScene extends Phaser.Scene {
 
   update(time) {
     if (this.state !== 'playing') return;
+    this.refreshBanner();
     const body = this.player.body;
     const left = this.cursors.left.isDown || this.keys.A.isDown || this.touch.state.left;
     const right = this.cursors.right.isDown || this.keys.D.isDown || this.touch.state.right;
@@ -153,7 +224,7 @@ export default class GameScene extends Phaser.Scene {
     // Releasing jump early gives a shorter hop
     if (!jumpDown && body.velocity.y < -200) body.setVelocityY(-200);
 
-    // Fell into a gap: lose a life and go back to the start
+    // Fell into a gap: lose a life and go back to the last checkpoint
     if (this.player.y > GAME_HEIGHT + 100) this.loseLife();
   }
 }

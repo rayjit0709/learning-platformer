@@ -6,5 +6,10 @@
   "lose.title": "Try again!",
   "lose.score": "You got {score} points",
   "lose.again": "Try again",
-  "panel.hint": "Press Space or tap the button"
+  "panel.hint": "Press Space or tap the button",
+  "q.correct": "Well done!",
+  "q.wrong": "Not quite. Try again!",
+  "q.hint": "Hint: {hint}",
+  "win.quiz": "{ok} out of {total} right on the first try",
+  "error.content": "The questions could not load. You can still play!"
 }

@@ -6,5 +6,10 @@
   "lose.title": "Essaie encore !",
   "lose.score": "Tu as {score} points",
   "lose.again": "Réessayer",
-  "panel.hint": "Appuie sur Espace ou touche le bouton"
+  "panel.hint": "Appuie sur Espace ou touche le bouton",
+  "q.correct": "Bravo !",
+  "q.wrong": "Pas tout à fait. Réessaie !",
+  "q.hint": "Indice : {hint}",
+  "win.quiz": "{ok} sur {total} réussies du premier coup",
+  "error.content": "Les questions ne se chargent pas. Tu peux quand même jouer !"
 }

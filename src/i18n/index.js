@@ -20,3 +20,11 @@ export function t(key, values = {}) {
   const text = DICTIONARIES[currentLang()][key] ?? DICTIONARIES.fr[key] ?? key;
   return text.replace(/\{(\w+)\}/g, (_, name) => values[name] ?? '');
 }
+
+// Picks the text for the current language from {"fr": "...", "en": "..."}.
+// Plain numbers and strings are shown as they are (useful for math answers).
+export function localized(value) {
+  if (value === null || value === undefined) return '';
+  if (typeof value !== 'object') return String(value);
+  return value[currentLang()] ?? value.fr ?? Object.values(value)[0] ?? '';
+}
