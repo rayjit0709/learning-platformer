@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import '@fontsource/noto-sans-tamil/tamil-400.css';
 import '@fontsource/noto-sans-tamil/tamil-700.css';
 import HomeScene from './scenes/HomeScene.js';
+import LevelSelectScene from './scenes/LevelSelectScene.js';
 import GameScene from './scenes/GameScene.js';
 import { GAME_WIDTH, GAME_HEIGHT } from './config/constants.js';
 
@@ -22,7 +23,7 @@ function startGame() {
       arcade: { gravity: { y: 1200 }, debug: false },
     },
     input: { activePointers: 3 }, // allows holding "right" and tapping "jump" together
-    scene: [HomeScene, GameScene],
+    scene: [HomeScene, LevelSelectScene, GameScene],
   });
 
   // Only in development: lets automated checks look inside the game.

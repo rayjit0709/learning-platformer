@@ -7,6 +7,7 @@ import { currentLang, t } from '../i18n/index.js';
 import { createMusicButton } from '../ui/IconButtons.js';
 import { INDEX_URL, QUESTIONS_INDEX_KEY } from '../config/content.js';
 import { SUBJECTS, DEFAULT_SUBJECT } from '../config/subjects.js';
+import { THEMES, drawBackdrop, addStripeBorder } from '../game/backdrops.js';
 
 const CARD_Y = 332;
 const CARD_X = { boy: 345, girl: 615 };
@@ -25,8 +26,9 @@ export default class HomeScene extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setBackgroundColor('#8fd3ff');
-    this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT - 20, GAME_WIDTH, 40, 0x5a9e4b).setStrokeStyle(3, 0x3b6e30);
+    drawBackdrop(this, 'temple');
+    this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT - 20, GAME_WIDTH, 40, THEMES.temple.ground[0]).setStrokeStyle(3, THEMES.temple.ground[1]);
+    addStripeBorder(this, 'temple', 0, GAME_HEIGHT - 40, GAME_WIDTH);
 
     this.add.text(GAME_WIDTH / 2, 52, t('home.title'), {
       fontFamily: FONT, fontSize: '48px', fontStyle: 'bold', color: '#ffffff', stroke: '#1a365d', strokeThickness: 8,
@@ -124,6 +126,6 @@ export default class HomeScene extends Phaser.Scene {
   }
 
   play() {
-    this.scene.start('GameScene');
+    this.scene.start('LevelSelectScene');
   }
 }

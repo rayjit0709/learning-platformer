@@ -1,16 +1,19 @@
 import Phaser from 'phaser';
 import { GAME_WIDTH, GAME_HEIGHT, PLAYER, GAME, QUIZ, FONT } from '../config/constants.js';
-import { LEVEL_1 } from '../game/levelData.js';
+import { buildLevel, LEVEL_COUNT } from '../game/levelData.js';
+import { THEMES, drawBackdrop, addStripeBorder } from '../game/backdrops.js';
 import TouchControls from '../ui/TouchControls.js';
 import { chosenHero } from '../config/heroes.js';
 import Hud from '../ui/Hud.js';
 import { showEndPanel } from '../ui/EndPanel.js';
+import { showFactCard } from '../ui/FactCard.js';
 import QuestionBanner from '../ui/QuestionBanner.js';
 import QuestionStation from '../game/QuestionStation.js';
 import { pickQuestions, prepareQuestion } from '../content/questions.js';
-import { queueSubject, collectSubject } from '../content/contentLoader.js';
+import { queueSubject, collectSubject, collectFacts } from '../content/contentLoader.js';
 import { buildVocabQuestions } from '../content/vocabQuestions.js';
-import { SUBJECTS, DEFAULT_SUBJECT } from '../config/subjects.js';
+import { SUBJECTS, DEFAULT_SUBJECT, WORD_TIERS } from '../config/subjects.js';
+import { saveStars, starsFor, isUnlocked, pickFact } from '../services/progress.js';
 import { getSetting } from '../services/settings.js';
 import { playWordAudio, stopWordAudio } from '../services/wordAudio.js';
 import { t } from '../i18n/index.js';
@@ -22,14 +25,22 @@ export default class GameScene extends Phaser.Scene {
     super('GameScene');
   }
 
+  // Which level to play comes from the level-select screen: scene.start('GameScene', { level: 2 })
+  init(data) {
+    this.levelNumber = Math.min(Math.max(Number(data?.level) || 1, 1), LEVEL_COUNT);
+  }
+
   preload() {
     // (character pictures, music and the content index are loaded by the start screen)
     this.subject = SUBJECTS[getSetting('subject')] || SUBJECTS[DEFAULT_SUBJECT];
     queueSubject(this, this.subject.id);
+    queueSubject(this, 'culture'); // the "did you know" facts
   }
 
   create() {
-    this.level = LEVEL_1;
+    this.level = buildLevel(this.levelNumber);
+    this.theme = THEMES[this.level.theme];
+    drawBackdrop(this, this.level.theme, this.level.width);
     this.lastOnGround = 0; // time of the last frame on the ground
     this.lastJumpPressed = -1000; // time of the last jump press
 
@@ -51,8 +62,11 @@ export default class GameScene extends Phaser.Scene {
     this.hud = new Hud(this, GAME_WIDTH);
     this.hud.update(this.score, this.lives);
     this.banner = new QuestionBanner(this);
+    this.add.text(20, 52, t('level.n', { n: this.levelNumber }), {
+      fontFamily: FONT, fontSize: '22px', fontStyle: 'bold', color: '#ffffff', stroke: '#1a365d', strokeThickness: 4,
+    }).setScrollFactor(0).setDepth(100);
     createMusicButton(this, GAME_WIDTH - 36, 92);
-    createHomeButton(this, GAME_WIDTH - 96, 92, () => this.scene.start('HomeScene'));
+    createHomeButton(this, GAME_WIDTH - 96, 92, () => this.scene.start('LevelSelectScene'));
     startMusic(this);
 
     // The camera follows the player through a level wider than the screen.
@@ -63,10 +77,13 @@ export default class GameScene extends Phaser.Scene {
 
   buildPlatforms() {
     this.platforms = this.physics.add.staticGroup();
+    const [fill, outline] = this.theme.ground;
     for (const p of this.level.platforms) {
-      const block = this.add.rectangle(p.x, p.y, p.w, p.h, 0x5a9e4b).setStrokeStyle(3, 0x3b6e30);
+      const block = this.add.rectangle(p.x, p.y, p.w, p.h, fill).setStrokeStyle(3, outline);
       this.physics.add.existing(block, true); // true = static (never moves)
       this.platforms.add(block);
+      // Striped temple border along the top of the ground and of the stones
+      addStripeBorder(this, this.level.theme, p.x - p.w / 2, p.y - p.h / 2, p.w);
     }
   }
 
@@ -93,12 +110,15 @@ export default class GameScene extends Phaser.Scene {
     this.contentError = false;
     const content = collectSubject(this, this.subject.id);
     // Questions written by hand, plus questions generated from vocabulary lists
-    const pool = [...content.questions, ...buildVocabQuestions(content.entries, content.categories, content.audio)];
+    // Early levels only use the easiest words (unless that would leave too few words)
+    const easy = content.entries.filter((e) => (WORD_TIERS[e.category] ?? 2) <= this.level.maxTier);
+    const entries = easy.length >= 8 ? easy : content.entries;
+    const pool = [...content.questions, ...buildVocabQuestions(entries, content.categories, content.audio)];
     if (pool.length === 0) {
       this.contentError = true; // the level stays playable, without questions
       return;
     }
-    const raw = pickQuestions(pool, this.subject.difficulties);
+    const raw = pickQuestions(pool, this.level.difficulties);
     this.level.stations.slice(0, raw.length).forEach((def, i) => {
       const station = new QuestionStation(this, def, prepareQuestion(raw[i]), this.level.flag.groundY);
       this.stations.push(station);
@@ -203,9 +223,23 @@ export default class GameScene extends Phaser.Scene {
     this.player.setAngle(0);
     const { total, firstTry } = this.quizStats;
     const quizLine = kind === 'won' && total > 0 ? t('win.quiz', { ok: firstTry, total }) : '';
+    const stars = kind === 'won' ? starsFor(firstTry, total) : 0;
+    if (kind === 'won') saveStars(this.subject.id, this.levelNumber, stars);
     this.banner.hide();
     stopWordAudio();
-    showEndPanel(this, kind, this.score, quizLine, () => this.scene.restart());
+    const next = this.levelNumber + 1;
+    const hasNext = kind === 'won' && next <= LEVEL_COUNT && isUnlocked(this.subject.id, next);
+    const play = (level) => this.scene.start('GameScene', { level });
+    const showPanel = () => showEndPanel(this, {
+      kind, score: this.score, stars, extraLine: quizLine,
+      onAgain: () => play(this.levelNumber),
+      onNext: hasNext ? () => play(next) : null,
+      onLevels: () => this.scene.start('LevelSelectScene'),
+    });
+    // After a win, first a "did you know" fact about Tamil culture, then the stars
+    const fact = kind === 'won' ? pickFact(collectFacts(this), this.levelNumber) : null;
+    if (fact) showFactCard(this, fact, this.level.theme, showPanel);
+    else showPanel();
   }
 
   buildControls() {

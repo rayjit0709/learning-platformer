@@ -68,6 +68,25 @@ function checkVocabEntry(v, index, file) {
 }
 let unverifiedVocab = 0;
 let unverifiedQuestions = 0;
+let factCount = 0;
+let unverifiedFacts = 0;
+
+// A "did you know" fact shown after a level: texts in both languages, a level from 1 to 5, and its sources
+function checkFact(f, index, file) {
+  const label = `${file}: fact #${index + 1}${f && f.id ? ` (${f.id})` : ''}`;
+  if (!f || typeof f !== 'object') return errors.push(`${label} is not an object`);
+  if (typeof f.id !== 'string' || f.id === '') errors.push(`${label} has no "id"`);
+  else if (seenIds.has(f.id)) errors.push(`${label}: id already used in ${seenIds.get(f.id)}`);
+  else seenIds.set(f.id, file);
+  if (!Number.isInteger(f.level) || f.level < 1 || f.level > 5) errors.push(`${label}: "level" must be a number from 1 to 5`);
+  for (const lang of REQUIRED_LANGS) {
+    if (typeof f[lang] !== 'string' || f[lang].trim() === '') errors.push(`${label}: missing "${lang}" text`);
+    else if (f[lang].length > 330) warnings.push(`${label}: the "${lang}" text is long (${f[lang].length} characters); it may not fit on the card`);
+  }
+  if (!Array.isArray(f.sources) || f.sources.length === 0) errors.push(`${label}: needs at least one source (a web address)`);
+  if (f.status === 'to be verified') unverifiedFacts += 1;
+  factCount += 1;
+}
 
 for (const file of walkContent()) {
   const name = relative(ROOT, file);
@@ -86,6 +105,11 @@ for (const file of walkContent()) {
     data.entries.forEach((v, i) => checkVocabEntry(v, i, name));
     continue;
   }
+  if (Array.isArray(data.facts)) {
+    if (data.facts.length === 0) errors.push(`${name}: "facts" is empty`);
+    data.facts.forEach((f, i) => checkFact(f, i, name));
+    continue;
+  }
   if (!Array.isArray(data.questions) || data.questions.length === 0) {
     errors.push(`${name}: needs a non-empty "questions" list (or an "entries" list for a vocabulary file)`);
     continue;
@@ -97,8 +121,9 @@ for (const [category, file] of usedCategories) {
   if (!categoryLabels.has(category)) warnings.push(`category "${category}" (used in ${file}) has no label in any "meta.categories", so hints for it will be generic`);
 }
 if (unverifiedQuestions > 0) warnings.push(`${unverifiedQuestions} question(s) still "to be verified"`);
+if (unverifiedFacts > 0) warnings.push(`${unverifiedFacts} culture fact(s) still "to be verified" by someone who knows the topic`);
 if (unverifiedVocab > 0) warnings.push(`${unverifiedVocab} vocabulary entr${unverifiedVocab === 1 ? 'y is' : 'ies are'} still "to be verified" by a native speaker`);
-console.log(`Checked ${fileCount} file(s): ${questionCount} question(s), ${vocabCount} vocabulary entr${vocabCount === 1 ? 'y' : 'ies'}.`);
+console.log(`Checked ${fileCount} file(s): ${questionCount} question(s), ${vocabCount} vocabulary entr${vocabCount === 1 ? 'y' : 'ies'}, ${factCount} culture fact(s).`);
 if (unreviewedFiles > 0) warnings.push(`${unreviewedFiles} file(s) not yet reviewed by a teacher or parent ("reviewed": false)`);
 for (const w of warnings) console.log(`  warning: ${w}`);
 for (const e of errors) console.log(`  ERROR: ${e}`);

@@ -16,9 +16,9 @@ for (const full of walkContent()) {
     console.log(`  skipped ${path}: not valid JSON`);
     continue;
   }
-  const type = Array.isArray(data.entries) ? 'vocab' : Array.isArray(data.questions) ? 'questions' : null;
+  const type = Array.isArray(data.entries) ? 'vocab' : Array.isArray(data.questions) ? 'questions' : Array.isArray(data.facts) ? 'facts' : null;
   if (!type || !data.meta || !data.meta.subject) {
-    console.log(`  skipped ${path}: needs "entries" or "questions" and a "meta.subject"`);
+    console.log(`  skipped ${path}: needs "entries", "questions" or "facts" and a "meta.subject"`);
     continue;
   }
   const pack = path.startsWith('content/packs/') ? path.split('/')[2] : null;
@@ -30,7 +30,9 @@ const audio = {};
 function addAudio(folder, urlBase) {
   if (!existsSync(folder)) return;
   for (const name of readdirSync(folder)) {
-    if (name.endsWith('.mp3')) audio[name.slice(0, -4)] = `${urlBase}/${name}`;
+    // .mp3 or .wav (the recorder page makes .wav). If both exist for a word, the .mp3 wins.
+    const match = name.match(/^(.+)\.(mp3|wav)$/);
+    if (match && !(match[2] === 'wav' && audio[match[1]]?.endsWith('.mp3'))) audio[match[1]] = `${urlBase}/${name}`;
   }
 }
 addAudio(join(PUBLIC_DIR, 'audio', 'ta'), 'audio/ta');

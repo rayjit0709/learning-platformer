@@ -28,6 +28,12 @@ Set `"reviewed": true` in a file's `meta` once a teacher or parent has checked i
 - The recipe for each level (number of questions, gap width, colours, how hard the questions and words are) is the `LEVELS` list in `src/game/levelData.js`. Which vocabulary category counts as easy or hard is `WORD_TIERS` in `src/config/subjects.js`.
 - Stars: 3 = every question right at the first try, 2 = at least half, 1 = finished the level. Progress is saved in `localStorage` (`lp.progress.v1`); profiles in M4 will split it per child.
 
+## Recording the words (voice recorder)
+1. Run `npm run dev` and open `http://localhost:5173/recorder.html` (the microphone only works on `localhost` or an `https` address, so not on a phone through the Wi-Fi address). On the public site, `/recorder.html` also works on a phone, but it only lists the 30 starter words (the class pack stays private).
+2. A native speaker records each word (Record, say it alone, Stop, Listen, Erase and redo if needed). Clips stay in that browser until downloaded.
+3. Press "Download the recordings (.zip)", then in the project folder run `unzip -o ~/Downloads/recordings.zip -d public` and restart `npm run dev`. Class-pack words go to the private pack folder; starter words go to `public/audio/ta/` (those can be pushed to GitHub).
+4. Files are WAV (16 kHz, mono). An `.mp3` with the same name wins over a `.wav` if you prefer to convert them.
+
 ## Culture facts
 - `public/content/culture/facts.json` holds the "Did you know?" cards: `level` (1 to 5), `fr`, `en`, `sources` (web addresses) and `status`. Keep each text under about 330 characters so it fits the card. After a win, a fact for that level not yet shown on this device appears first.
 - All facts are marked "to be verified": they were checked against the listed web sources, but please have someone who knows the topic read them before the game is shared widely.
@@ -60,7 +66,7 @@ Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
 - [x] **L1** Levels: 5 levels per subject (more questions, wider gaps, new colours, harder words as you go). Win 1 to 3 stars from first-try answers; 2 stars open the next level. Level-select screen, best stars saved on the device (add `?unlock=1` to the address to open every level when testing)
 - [x] **S1** South Indian look, all drawn in code: village and paddy fields, temple town with gopurams, sea coast, hills and tea gardens, night of oil lamps (one per level); temple-style striped borders on the ground
 - [x] **C1** "Did you know?" card after each win (Tamil and Dravidian culture and history, three facts per level in French and English, with sources, shown in turn; including Sri Lankan (Eelam) Tamil culture and history)
-- [ ] T2 Voice recorder (a native speaker records each word in the browser) and listen-and-pick
+- [x] **T2** Voice recorder: open `recorder.html` (on your computer: `http://localhost:5173/recorder.html` while `npm run dev` runs). It shows each word, you press Record, say it, press Stop; it trims the silence and keeps the clip on the device. "Download" gives a `recordings.zip` to unzip into `public`; words with a recording then get a speaker button and "listen and choose" questions
 - [ ] T3 More Tamil game types: matching, listen-and-repeat, "Jacques a dit" commands level
 - [ ] T4 Pictures for the words (original art or free-licensed packs)
 - [ ] M4 Full home screen: level, subject, language, FR/EN switch, 2-5 profiles

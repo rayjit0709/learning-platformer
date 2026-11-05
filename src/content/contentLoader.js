@@ -35,7 +35,7 @@ export function collectSubject(scene, subject) {
   return { questions, entries: dedupe(entries), categories, audio };
 }
 
-function dedupe(entries) {
+export function dedupe(entries) {
   const seen = new Set();
   return entries.filter((e) => {
     const key = `${e['ta-Latn'].toLowerCase()}|${e.fr.toLowerCase()}`;
@@ -43,4 +43,15 @@ function dedupe(entries) {
     seen.add(key);
     return true;
   });
+}
+
+// "Did you know" facts shown after a level. Same loading rules as above: a missing file just means no facts.
+export function collectFacts(scene) {
+  const facts = [];
+  for (const file of readIndex(scene).files) {
+    if (file.type !== 'facts') continue;
+    const data = scene.cache.json.get(fileKey(file.path));
+    if (data) facts.push(...data.facts);
+  }
+  return facts;
 }
