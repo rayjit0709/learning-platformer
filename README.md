@@ -25,7 +25,11 @@ It also runs automatically before every build, so a broken file can never be pub
 Set `"reviewed": true` in a file's `meta` once a teacher or parent has checked it.
 
 ## Handy address options (for testing)
-- `?hero=girl` plays the girl character; `?lang=en` shows English; `?touch=1` shows the touch buttons on a computer. Combine them with `&`, for example `?lang=en&hero=girl`.
+- `?hero=girl` forces the girl character; `?lang=en` forces English (normally the start screen remembers your choice); `?touch=1` shows the touch buttons on a computer. Combine them with `&`, for example `?lang=en&hero=girl`.
+
+## Music
+`src/assets/music/theme.mp3` is an original 16-bar loop composed in code: `python3 tools/make-music.py` re-creates it (needs Python, numpy and ffmpeg).
+To use your own track instead, replace that file with another mp3 of the same name.
 
 ## Tech
 Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
@@ -35,7 +39,8 @@ Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
 - [x] **M1.1** Original boy and girl characters (add `?hero=girl` to the address for the girl; the profile picker comes in M4)
 - [x] **M2** Higher jump, 20 coins, score, 3 lives (hearts), flag at the end, win / try-again screen, French and English texts (`?lang=en`)
 - [x] **M3** Four question stations (answer blocks + gate), 15 Cycle 2 math questions in JSON (fr/en), hints and retry without penalty, checkpoints, content validator
-- [ ] M4 Home screen: level, subject, language, FR/EN switch, 2-5 profiles
+- [x] **M3.1** Start screen: choose the boy or girl character, FR/EN switch, Play; original music loop with an on/off button (also key M); choices remembered on the device
+- [ ] M4 Full home screen: level, subject, language, FR/EN switch, 2-5 profiles
 - [ ] M5 Four school bands (Maternelle, Cycle 2, Cycle 3, Collège) with their own difficulty and theme
 - [ ] M6 French and English content, read-aloud (on/off)
 - [ ] M7 Tamil oral mode: class pack (private) + 30-word starter list, all "to be verified"

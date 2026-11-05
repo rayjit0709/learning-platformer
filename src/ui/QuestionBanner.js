@@ -1,6 +1,6 @@
 import { GAME_WIDTH, FONT } from '../config/constants.js';
 
-const BOX_WIDTH = 700;
+const BOX_WIDTH = 660;
 const TOP = 72;
 
 // The panel at the top of the screen that shows the current question,

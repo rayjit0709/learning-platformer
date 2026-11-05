@@ -11,5 +11,10 @@
   "q.wrong": "Not quite. Try again!",
   "q.hint": "Hint: {hint}",
   "win.quiz": "{ok} out of {total} right on the first try",
-  "error.content": "The questions could not load. You can still play!"
+  "error.content": "The questions could not load. You can still play!",
+  "home.title": "Learning game",
+  "home.choose": "Choose your character",
+  "home.play": "Play",
+  "hero.boy": "Boy",
+  "hero.girl": "Girl"
 }

@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import { GAME_WIDTH, GAME_HEIGHT, PLAYER, GAME, QUIZ, FONT } from '../config/constants.js';
 import { LEVEL_1 } from '../game/levelData.js';
 import TouchControls from '../ui/TouchControls.js';
-import { HEROES, chosenHero } from '../config/heroes.js';
+import { chosenHero } from '../config/heroes.js';
 import Hud from '../ui/Hud.js';
 import { showEndPanel } from '../ui/EndPanel.js';
 import QuestionBanner from '../ui/QuestionBanner.js';
@@ -10,6 +10,8 @@ import QuestionStation from '../game/QuestionStation.js';
 import { QUESTIONS_KEY, QUESTIONS_URL } from '../config/content.js';
 import { isValidQuestionFile, pickQuestions, prepareQuestion } from '../content/questions.js';
 import { t } from '../i18n/index.js';
+import { startMusic } from '../services/music.js';
+import { createMusicButton, createHomeButton } from '../ui/IconButtons.js';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -17,7 +19,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    for (const hero of Object.values(HEROES)) this.load.image(hero.textureKey, hero.url);
+    // (character pictures and music are loaded by the start screen)
     this.load.json(QUESTIONS_KEY, QUESTIONS_URL);
   }
 
@@ -43,6 +45,9 @@ export default class GameScene extends Phaser.Scene {
     this.hud = new Hud(this, GAME_WIDTH);
     this.hud.update(this.score, this.lives);
     this.banner = new QuestionBanner(this);
+    createMusicButton(this, GAME_WIDTH - 36, 92);
+    createHomeButton(this, GAME_WIDTH - 96, 92, () => this.scene.start('HomeScene'));
+    startMusic(this);
 
     // The camera follows the player through a level wider than the screen.
     this.physics.world.setBounds(0, 0, this.level.width, GAME_HEIGHT * 2);

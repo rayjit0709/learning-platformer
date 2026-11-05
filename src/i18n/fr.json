@@ -11,5 +11,10 @@
   "q.wrong": "Pas tout à fait. Réessaie !",
   "q.hint": "Indice : {hint}",
   "win.quiz": "{ok} sur {total} réussies du premier coup",
-  "error.content": "Les questions ne se chargent pas. Tu peux quand même jouer !"
+  "error.content": "Les questions ne se chargent pas. Tu peux quand même jouer !",
+  "home.title": "Jeu d'apprentissage",
+  "home.choose": "Choisis ton personnage",
+  "home.play": "Jouer",
+  "hero.boy": "Garçon",
+  "hero.girl": "Fille"
 }

@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import HomeScene from './scenes/HomeScene.js';
 import GameScene from './scenes/GameScene.js';
 import { GAME_WIDTH, GAME_HEIGHT } from './config/constants.js';
 
@@ -18,7 +19,7 @@ const game = new Phaser.Game({
     arcade: { gravity: { y: 1200 }, debug: false },
   },
   input: { activePointers: 3 }, // allows holding "right" and tapping "jump" together
-  scene: [GameScene],
+  scene: [HomeScene, GameScene],
 });
 
 // Only in development: lets automated checks look inside the game.
