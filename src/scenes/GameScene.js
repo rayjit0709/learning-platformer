@@ -1,8 +1,10 @@
 import Phaser from 'phaser';
-import { GAME_WIDTH, GAME_HEIGHT, PLAYER } from '../config/constants.js';
+import { GAME_WIDTH, GAME_HEIGHT, PLAYER, GAME } from '../config/constants.js';
 import { LEVEL_1 } from '../game/levelData.js';
 import TouchControls from '../ui/TouchControls.js';
 import { HEROES, chosenHero } from '../config/heroes.js';
+import Hud from '../ui/Hud.js';
+import { showEndPanel } from '../ui/EndPanel.js';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -18,9 +20,17 @@ export default class GameScene extends Phaser.Scene {
     this.lastOnGround = 0; // time of the last frame on the ground
     this.lastJumpPressed = -1000; // time of the last jump press
 
+    this.state = 'playing'; // 'playing' | 'won' | 'lost'
+    this.score = 0;
+    this.lives = GAME.lives;
+
     this.buildPlatforms();
     this.buildPlayer();
+    this.buildCoins();
+    this.buildFlag();
     this.buildControls();
+    this.hud = new Hud(this, GAME_WIDTH);
+    this.hud.update(this.score, this.lives);
 
     // The camera follows the player through a level wider than the screen.
     this.physics.world.setBounds(0, 0, this.level.width, GAME_HEIGHT * 2);
@@ -54,6 +64,57 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.platforms);
   }
 
+  buildCoins() {
+    this.coins = this.physics.add.staticGroup();
+    for (const c of this.level.coins) {
+      const coin = this.add.circle(c.x, c.y, 13, 0xfbd34d).setStrokeStyle(3, 0xc58b0a);
+      this.physics.add.existing(coin, true);
+      this.coins.add(coin);
+      // Spinning look: squeeze the coin sideways and back
+      this.tweens.add({ targets: coin, scaleX: 0.25, duration: 450, yoyo: true, repeat: -1, delay: (c.x % 5) * 80 });
+    }
+    this.physics.add.overlap(this.player, this.coins, (player, coin) => {
+      coin.destroy();
+      this.score += GAME.coinPoints;
+      this.hud.update(this.score, this.lives);
+    });
+  }
+
+  buildFlag() {
+    const { x, groundY } = this.level.flag;
+    this.add.rectangle(x, groundY - 60, 8, 120, 0xe2e8f0).setStrokeStyle(2, 0x718096); // pole
+    this.add.triangle(x + 4, groundY - 100, 0, 0, 0, 44, 56, 22, 0xe53e3e).setOrigin(0, 0).setStrokeStyle(2, 0x9b2c2c); // flag
+    this.add.circle(x, groundY - 122, 8, 0xfbd34d); // golden top
+
+    // Invisible zone around the flag that wins the level
+    const zone = this.add.zone(x, groundY - 60, 60, 120);
+    this.physics.add.existing(zone, true);
+    this.physics.add.overlap(this.player, zone, () => this.endTry('won'));
+  }
+
+  // Called when the player falls into the gap
+  loseLife() {
+    this.lives -= 1;
+    this.hud.update(this.score, this.lives);
+    if (this.lives <= 0) {
+      this.endTry('lost');
+      return;
+    }
+    this.player.setPosition(this.level.start.x, this.level.start.y);
+    this.player.body.setVelocity(0, 0);
+    this.cameras.main.shake(150, 0.004);
+  }
+
+  // Ends the try (won or lost) and shows the panel. Restarting reloads the scene.
+  endTry(kind) {
+    if (this.state !== 'playing') return;
+    this.state = kind;
+    this.player.body.setVelocity(0, 0);
+    this.player.body.enable = false; // freeze the character
+    this.player.setAngle(0);
+    showEndPanel(this, kind, this.score, () => this.scene.restart());
+  }
+
   buildControls() {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys('W,A,D,SPACE');
@@ -62,6 +123,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update(time) {
+    if (this.state !== 'playing') return;
     const body = this.player.body;
     const left = this.cursors.left.isDown || this.keys.A.isDown || this.touch.state.left;
     const right = this.cursors.right.isDown || this.keys.D.isDown || this.touch.state.right;
@@ -91,10 +153,7 @@ export default class GameScene extends Phaser.Scene {
     // Releasing jump early gives a shorter hop
     if (!jumpDown && body.velocity.y < -200) body.setVelocityY(-200);
 
-    // Fell into a gap: back to the start (lives come in M2)
-    if (this.player.y > GAME_HEIGHT + 100) {
-      this.player.setPosition(this.level.start.x, this.level.start.y);
-      body.setVelocity(0, 0);
-    }
+    // Fell into a gap: lose a life and go back to the start
+    if (this.player.y > GAME_HEIGHT + 100) this.loseLife();
   }
 }

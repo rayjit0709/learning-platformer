@@ -14,13 +14,16 @@ Controls: arrow keys or A/D to move, Up / W / Space to jump. Touch: big buttons 
 ## Put it online
 See `DEPLOY.md` (GitHub + Netlify, step by step).
 
+## Handy address options (for testing)
+- `?hero=girl` plays the girl character; `?lang=en` shows English; `?touch=1` shows the touch buttons on a computer. Combine them with `&`, for example `?lang=en&hero=girl`.
+
 ## Tech
 Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
 
 ## What's built / what's next
 - [x] **M1** Moving, jumping character; keyboard and touch controls; scrolling level; respawn when falling
 - [x] **M1.1** Original boy and girl characters (add `?hero=girl` to the address for the girl; the profile picker comes in M4)
-- [ ] M2 Coins, lives, score, flag
+- [x] **M2** Higher jump, 20 coins, score, 3 lives (hearts), flag at the end, win / try-again screen, French and English texts (`?lang=en`)
 - [ ] M3 Math answer blocks from JSON, hints, retry
 - [ ] M4 Home screen: level, subject, language, FR/EN switch, 2-5 profiles
 - [ ] M5 Four school bands (Maternelle, Cycle 2, Cycle 3, Collège) with their own difficulty and theme
@@ -30,5 +33,6 @@ Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
 
 ## Project notes
 - `src/config/constants.js` holds screen size and player feel (speed, jump).
-- `src/game/levelData.js` holds the level layout as plain data.
+- `src/game/levelData.js` holds the level layout (platforms, coins, flag) as plain data.
+- `src/i18n/` holds the interface texts (`fr.json`, `en.json`).
 - `public/content/packs/` is private class material and is excluded from Git on purpose.

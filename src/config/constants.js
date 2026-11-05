@@ -8,7 +8,16 @@ export const PLAYER = {
   height: 78,
   spriteScale: 0.25, // the character PNGs are 4x the on-screen size, for sharpness
   speed: 240,
-  jumpSpeed: 560,
+  jumpSpeed: 650, // about 176 px of height: every platform is reachable with room to spare
   coyoteMs: 120, // can still jump a moment after leaving a platform
   bufferMs: 120, // a jump pressed just before landing still counts
 };
+
+export const GAME = {
+  lives: 3,
+  coinPoints: 10,
+  restartDelayMs: 700, // ignore key presses right after the end panel appears
+};
+
+// Friendly, round-looking system fonts (no download needed, works offline).
+export const FONT = '"Trebuchet MS", "Segoe UI", Verdana, Arial, sans-serif';

@@ -1,0 +1,10 @@
+{
+  "hud.score": "Score: {score}",
+  "win.title": "Hooray!",
+  "win.score": "You got {score} points",
+  "win.again": "Play again",
+  "lose.title": "Try again!",
+  "lose.score": "You got {score} points",
+  "lose.again": "Try again",
+  "panel.hint": "Press Space or tap the button"
+}
