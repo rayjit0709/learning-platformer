@@ -18,7 +18,8 @@ See `DEPLOY.md` (GitHub + Netlify, step by step).
 Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
 
 ## What's built / what's next
-- [x] **M1** Moving, jumping placeholder character; keyboard and touch controls; scrolling level; respawn when falling
+- [x] **M1** Moving, jumping character; keyboard and touch controls; scrolling level; respawn when falling
+- [x] **M1.1** Original boy and girl characters (add `?hero=girl` to the address for the girl; the profile picker comes in M4)
 - [ ] M2 Coins, lives, score, flag
 - [ ] M3 Math answer blocks from JSON, hints, retry
 - [ ] M4 Home screen: level, subject, language, FR/EN switch, 2-5 profiles

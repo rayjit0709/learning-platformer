@@ -3,7 +3,7 @@
 // x, y = centre of the platform; w, h = size. Everything in pixels.
 export const LEVEL_1 = {
   width: 2600,
-  start: { x: 80, y: 400 },
+  start: { x: 340, y: 400 }, // right of the touch buttons
   platforms: [
     { x: 520, y: 520, w: 1040, h: 40 },   // ground, part 1 (ends at x=1040)
     { x: 1900, y: 520, w: 1400, h: 40 },  // ground, part 2 (starts at x=1200: a 160px gap)

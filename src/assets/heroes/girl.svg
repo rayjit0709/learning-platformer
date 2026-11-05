@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 240" width="160" height="240">
+  <!-- braid hanging behind on the right -->
+  <path d="M116 56 C140 80 140 120 128 160" stroke="#1c1c1c" stroke-width="14" fill="none" stroke-linecap="round"/>
+  <circle cx="128" cy="166" r="6" fill="#d62f4b"/>
+  <path d="M126 168 L122 186 M130 168 L134 186" stroke="#d62f4b" stroke-width="3" stroke-linecap="round"/>
+  <!-- feet -->
+  <ellipse cx="64" cy="228" rx="13" ry="6" fill="#c98a52"/>
+  <ellipse cx="96" cy="228" rx="13" ry="6" fill="#c98a52"/>
+  <circle cx="58" cy="224" r="2" fill="#d4a017"/><circle cx="102" cy="224" r="2" fill="#d4a017"/>
+  <!-- pavadai (skirt) -->
+  <path d="M52 130 L108 130 L128 222 L32 222 Z" fill="#d62f4b"/>
+  <path d="M33 208 L127 208 L128 222 L32 222 Z" fill="#d4a017"/>
+  <path d="M38 190 Q80 200 122 190" stroke="#f2b84b" stroke-width="3" fill="none"/>
+  <circle cx="60" cy="168" r="3" fill="#f2b84b"/><circle cx="80" cy="176" r="3" fill="#f2b84b"/>
+  <circle cx="100" cy="168" r="3" fill="#f2b84b"/><circle cx="70" cy="190" r="3" fill="#f2b84b"/>
+  <circle cx="92" cy="190" r="3" fill="#f2b84b"/>
+  <!-- arms -->
+  <rect x="34" y="98" width="18" height="38" rx="9" fill="#d49a60"/>
+  <rect x="108" y="98" width="18" height="38" rx="9" fill="#d49a60"/>
+  <circle cx="42" cy="140" r="9" fill="#d49a60"/>
+  <circle cx="118" cy="140" r="9" fill="#d49a60"/>
+  <rect x="34" y="124" width="18" height="4" rx="2" fill="#f2b84b"/>
+  <rect x="108" y="124" width="18" height="4" rx="2" fill="#f2b84b"/>
+  <!-- blouse -->
+  <rect x="48" y="94" width="64" height="44" rx="14" fill="#2f8f5b"/>
+  <rect x="34" y="96" width="20" height="18" rx="9" fill="#2f8f5b"/>
+  <rect x="106" y="96" width="20" height="18" rx="9" fill="#2f8f5b"/>
+  <!-- half-saree sash -->
+  <path d="M52 96 L70 96 L112 146 L90 150 Z" fill="#f08a24"/>
+  <path d="M52 96 L58 96 L100 148 L90 150 Z" fill="#d4a017" opacity="0.8"/>
+  <!-- neck -->
+  <rect x="71" y="84" width="18" height="18" rx="6" fill="#c98a52"/>
+  <!-- ears + earrings -->
+  <circle cx="38" cy="64" r="9" fill="#d49a60"/>
+  <circle cx="122" cy="64" r="9" fill="#d49a60"/>
+  <circle cx="36" cy="78" r="4" fill="#d4a017"/>
+  <circle cx="124" cy="78" r="4" fill="#d4a017"/>
+  <!-- head -->
+  <ellipse cx="80" cy="60" rx="42" ry="38" fill="#e0a86e"/>
+  <!-- hair with centre parting -->
+  <path d="M38 62 C30 16 66 4 80 8 C96 4 132 18 122 62 C118 40 98 28 80 26 C62 28 42 40 38 62 Z" fill="#1c1c1c"/>
+  <path d="M80 10 L80 28" stroke="#4a4a4a" stroke-width="2"/>
+  <!-- jasmine flowers on the left of the hair -->
+  <g fill="#fffdf4" stroke="#e8e0c8" stroke-width="1">
+    <circle cx="42" cy="34" r="5"/><circle cx="50" cy="26" r="5"/><circle cx="36" cy="44" r="5"/><circle cx="58" cy="20" r="5"/>
+  </g>
+  <!-- gold forehead chain and bindi -->
+  <path d="M80 28 L80 38" stroke="#d4a017" stroke-width="2"/>
+  <circle cx="80" cy="42" r="4.5" fill="#d4a017"/>
+  <circle cx="80" cy="50" r="3.5" fill="#d62f4b"/>
+  <!-- eyes -->
+  <ellipse cx="64" cy="66" rx="10" ry="11.5" fill="#fff"/>
+  <ellipse cx="96" cy="66" rx="10" ry="11.5" fill="#fff"/>
+  <circle cx="65" cy="67" r="7" fill="#3a2216"/>
+  <circle cx="97" cy="67" r="7" fill="#3a2216"/>
+  <circle cx="67.5" cy="64" r="2.4" fill="#fff"/>
+  <circle cx="99.5" cy="64" r="2.4" fill="#fff"/>
+  <path d="M54 55 Q64 48 74 54" stroke="#1c1c1c" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  <path d="M86 54 Q96 48 106 55" stroke="#1c1c1c" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  <!-- blush, nose, smile -->
+  <circle cx="54" cy="80" r="6" fill="#e0707a" opacity="0.35"/>
+  <circle cx="106" cy="80" r="6" fill="#e0707a" opacity="0.35"/>
+  <path d="M77 76 Q80 80 83 76" stroke="#b07440" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M69 84 Q80 96 91 84 Z" fill="#9b2c3a"/>
+  <path d="M74 86 Q80 92 86 86 Q80 89 74 86 Z" fill="#fff"/>
+</svg>

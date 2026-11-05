@@ -2,10 +2,15 @@ import Phaser from 'phaser';
 import { GAME_WIDTH, GAME_HEIGHT, PLAYER } from '../config/constants.js';
 import { LEVEL_1 } from '../game/levelData.js';
 import TouchControls from '../ui/TouchControls.js';
+import { HEROES, chosenHero } from '../config/heroes.js';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('GameScene');
+  }
+
+  preload() {
+    for (const hero of Object.values(HEROES)) this.load.image(hero.textureKey, hero.url);
   }
 
   create() {
@@ -34,9 +39,17 @@ export default class GameScene extends Phaser.Scene {
 
   buildPlayer() {
     const { start } = this.level;
-    this.player = this.add.rectangle(start.x, start.y, PLAYER.width, PLAYER.height, 0xf6ad55)
-      .setStrokeStyle(3, 0xc05621);
+    const hero = chosenHero();
+    this.player = this.add.image(start.x, start.y, hero.textureKey).setScale(PLAYER.spriteScale);
     this.physics.add.existing(this.player);
+
+    // Hitbox sizes below are in picture pixels (before scaling), so divide by the scale.
+    const hitW = PLAYER.width / PLAYER.spriteScale;
+    const hitH = PLAYER.height / PLAYER.spriteScale;
+    const picW = this.player.width;
+    const picH = this.player.height;
+    this.player.body.setSize(hitW, hitH);
+    this.player.body.setOffset((picW - hitW) / 2, picH - hitH - 8); // feet sit on the platform
     this.player.body.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, this.platforms);
   }
@@ -54,10 +67,14 @@ export default class GameScene extends Phaser.Scene {
     const right = this.cursors.right.isDown || this.keys.D.isDown || this.touch.state.right;
     const jumpDown = this.cursors.up.isDown || this.keys.W.isDown || this.keys.SPACE.isDown || this.touch.state.jump;
 
-    // Horizontal movement
-    if (left && !right) body.setVelocityX(-PLAYER.speed);
-    else if (right && !left) body.setVelocityX(PLAYER.speed);
+    // Horizontal movement (the character turns to face where it goes)
+    if (left && !right) { body.setVelocityX(-PLAYER.speed); this.player.setFlipX(true); }
+    else if (right && !left) { body.setVelocityX(PLAYER.speed); this.player.setFlipX(false); }
     else body.setVelocityX(0);
+
+    // Little side-to-side wobble while walking, so it feels alive
+    const walking = body.blocked.down && body.velocity.x !== 0;
+    this.player.setAngle(walking ? Math.sin(time / 70) * 4 : 0);
 
     // Jump: remember the press (buffer) and the last time on the ground (coyote)
     if (body.blocked.down) this.lastOnGround = time;
