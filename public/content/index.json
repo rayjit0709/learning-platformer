@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "files": [
+  {
+   "path": "content/packs/tamil-class/questions.json",
+   "type": "questions",
+   "subject": "tamil",
+   "pack": "tamil-class"
+  },
+  {
+   "path": "content/packs/tamil-class/vocab.json",
+   "type": "vocab",
+   "subject": "tamil",
+   "pack": "tamil-class"
+  },
+  {
+   "path": "content/primaire-c2/math/addition-subtraction.json",
+   "type": "questions",
+   "subject": "math",
+   "pack": null
+  },
+  {
+   "path": "content/tamil/starter-vocab.json",
+   "type": "vocab",
+   "subject": "tamil",
+   "pack": null
+  }
+ ],
+ "audio": {}
+}

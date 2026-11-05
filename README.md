@@ -24,6 +24,22 @@ After any change, run `npm run content`. It checks every question file and lists
 It also runs automatically before every build, so a broken file can never be published by mistake.
 Set `"reviewed": true` in a file's `meta` once a teacher or parent has checked it.
 
+## Levels
+- The recipe for each level (number of questions, gap width, colours, how hard the questions and words are) is the `LEVELS` list in `src/game/levelData.js`. Which vocabulary category counts as easy or hard is `WORD_TIERS` in `src/config/subjects.js`.
+- Stars: 3 = every question right at the first try, 2 = at least half, 1 = finished the level. Progress is saved in `localStorage` (`lp.progress.v1`); profiles in M4 will split it per child.
+
+## Culture facts
+- `public/content/culture/facts.json` holds the "Did you know?" cards: `level` (1 to 5), `fr`, `en`, `sources` (web addresses) and `status`. Keep each text under about 330 characters so it fits the card. After a win, a fact for that level not yet shown on this device appears first.
+- All facts are marked "to be verified": they were checked against the listed web sources, but please have someone who knows the topic read them before the game is shared widely.
+- The look of each level lives in `src/game/backdrops.js` (colours and shapes per theme).
+
+## Tamil mode
+- Vocabulary lists live in `public/content/**/vocab.json` (or `starter-vocab.json`). Each word has Tamil script, Latin spelling, French, English, a category, and `"status": "to be verified"` until a native speaker checks it.
+- `public/content/tamil/starter-vocab.json` (30 words) is public. The class material in `public/content/packs/tamil-class/` is **private**: it is in `.gitignore`, so it only works on your computer (`npm run dev`) and never reaches GitHub or the public link. The public link falls back to the 30 starter words.
+- To try it on a phone at home: `npm run dev -- --host`, then open the "Network" address it prints (same Wi-Fi).
+- Recordings: put an mp3 named after the word id in `public/audio/ta/<id>.mp3` (public) or `public/content/packs/<pack>/audio/<id>.mp3` (private, wins if both exist). Words with a recording get a speaker button, play automatically, and gain a "listen and choose" question. Words without one still work.
+- Run `npm run content` after editing: it checks the files and reminds you what is still unverified.
+
 ## Handy address options (for testing)
 - `?hero=girl` forces the girl character; `?lang=en` forces English (normally the start screen remembers your choice); `?touch=1` shows the touch buttons on a computer. Combine them with `&`, for example `?lang=en&hero=girl`.
 
@@ -40,10 +56,16 @@ Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
 - [x] **M2** Higher jump, 20 coins, score, 3 lives (hearts), flag at the end, win / try-again screen, French and English texts (`?lang=en`)
 - [x] **M3** Four question stations (answer blocks + gate), 15 Cycle 2 math questions in JSON (fr/en), hints and retry without penalty, checkpoints, content validator
 - [x] **M3.1** Start screen: choose the boy or girl character, FR/EN switch, Play; original music loop with an on/off button (also key M); choices remembered on the device
+- [x] **T1** Tamil mode: choose "Tamoul" on the start screen. Questions are generated from vocabulary lists (Tamil script + Latin spelling): "what does it mean?", "how do you say it in Tamil?", and "listen and choose" when a recording exists. Everything Tamil is marked "to be verified"
+- [x] **L1** Levels: 5 levels per subject (more questions, wider gaps, new colours, harder words as you go). Win 1 to 3 stars from first-try answers; 2 stars open the next level. Level-select screen, best stars saved on the device (add `?unlock=1` to the address to open every level when testing)
+- [x] **S1** South Indian look, all drawn in code: village and paddy fields, temple town with gopurams, sea coast, hills and tea gardens, night of oil lamps (one per level); temple-style striped borders on the ground
+- [x] **C1** "Did you know?" card after each win (Tamil and Dravidian culture and history, three facts per level in French and English, with sources, shown in turn; including Sri Lankan (Eelam) Tamil culture and history)
+- [ ] T2 Voice recorder (a native speaker records each word in the browser) and listen-and-pick
+- [ ] T3 More Tamil game types: matching, listen-and-repeat, "Jacques a dit" commands level
+- [ ] T4 Pictures for the words (original art or free-licensed packs)
 - [ ] M4 Full home screen: level, subject, language, FR/EN switch, 2-5 profiles
 - [ ] M5 Four school bands (Maternelle, Cycle 2, Cycle 3, Collège) with their own difficulty and theme
 - [ ] M6 French and English content, read-aloud (on/off)
-- [ ] M7 Tamil oral mode: class pack (private) + 30-word starter list, all "to be verified"
 - [ ] M8 Stars, badges, saved progress, sound and music, PWA (installable, offline), final deploy
 
 ## Project notes

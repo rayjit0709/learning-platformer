@@ -8,14 +8,16 @@ export function isValidQuestionFile(data) {
 // Picks one random question per wanted difficulty, e.g. [1, 2, 2, 3].
 // If a difficulty has no question left, any unused question is used instead.
 export function pickQuestions(questions, difficulties) {
+  // "group" is the word a generated question is about: never ask twice about the same word in one level
+  const groupOf = (q) => q.group ?? q.id;
   const used = new Set();
   const picked = [];
   for (const wanted of difficulties) {
-    let pool = questions.filter((q) => (q.difficulty ?? 1) === wanted && !used.has(q.id));
-    if (pool.length === 0) pool = questions.filter((q) => !used.has(q.id));
+    let pool = questions.filter((q) => (q.difficulty ?? 1) === wanted && !used.has(groupOf(q)));
+    if (pool.length === 0) pool = questions.filter((q) => !used.has(groupOf(q)));
     if (pool.length === 0) break;
     const q = pool[Math.floor(Math.random() * pool.length)];
-    used.add(q.id);
+    used.add(groupOf(q));
     picked.push(q);
   }
   return picked;
@@ -35,5 +37,7 @@ export function prepareQuestion(raw) {
     hint: localized(raw.hint),
     choices: order.map((i) => localized(raw.choices[i])),
     answerIndex: order.indexOf(raw.answer),
+    audio: raw.audio || null, // address of a recording of the word, if one exists
+    hideText: Boolean(raw.hideText), // true for "listen" questions: the word is only played
   };
 }

@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "subject": "culture",
+    "reviewed": false,
+    "note": "Short facts shown after each level (level 1 to 5): Tamil Nadu and Dravidian culture, plus Sri Lankan (Eelam) Tamil culture and history. Each fact lists its sources; please have someone who knows the topic check them before sharing the game widely. The Eelam cards use the name in its historical and cultural sense (the Tamil name of the island) and avoid political claims."
+  },
+  "facts": [
+    {
+      "id": "pongal-kolam",
+      "level": 1,
+      "fr": "En janvier, la fête de Pongal remercie le Soleil pour la récolte. Devant la maison, on dessine un kolam (கோலம்) avec de la farine de riz. Et on fait cuire le riz jusqu'à ce qu'il déborde de la marmite : c'est le signe de l'abondance !",
+      "en": "In January, the Pongal festival thanks the Sun for the harvest. At the front of the house, people draw a kolam (கோலம்) with rice flour. And rice is cooked until it overflows the pot: a sign of plenty!",
+      "sources": [
+        "https://www.theglobetrotter.co.uk/2024/01/pongal-festival-india.html"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "tamil-alphabet",
+      "level": 1,
+      "fr": "L'écriture tamoule a 247 signes : 12 voyelles, 18 consonnes, 1 signe spécial (l'aytam) et 216 signes qui mélangent une consonne et une voyelle (12 × 18).",
+      "en": "The Tamil script has 247 characters: 12 vowels, 18 consonants, 1 special character (the aytam) and 216 characters that combine a consonant with a vowel (12 × 18).",
+      "sources": [
+        "https://en.wikipedia.org/wiki/ISO_639:ta"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "eelam-name",
+      "level": 1,
+      "fr": "Eelam (ஈழம்) est le nom tamoul de l'île du Sri Lanka. On le trouve déjà dans de très vieux textes tamouls, comme la poésie Sangam, et dans une inscription tamoule d'environ le Ier siècle avant notre ère. Les Tamouls du Sri Lanka vivent surtout dans le nord et l'est de l'île.",
+      "en": "Eelam (ஈழம்) is the Tamil name of the island of Sri Lanka. It is already found in very old Tamil texts, such as Sangam poetry, and in a Tamil inscription from about the 1st century BCE. Sri Lankan Tamils live mostly in the north and east of the island.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Eelam",
+        "https://en.wikipedia.org/wiki/Jaffna"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "brihadisvara",
+      "level": 2,
+      "fr": "À Thanjavur, le grand temple Brihadisvara a été construit par le roi chola Rajaraja Ier et terminé en 1010. Sa tour mesure environ 60 mètres de haut. Il est classé au patrimoine mondial de l'UNESCO.",
+      "en": "In Thanjavur, the great Brihadisvara temple was built by the Chola king Rajaraja I and finished in 1010. Its tower is about 60 metres tall. It is a UNESCO World Heritage Site.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Brihadisvara_Temple"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "dravidian-family",
+      "level": 2,
+      "fr": "Le tamoul fait partie de la famille des langues dravidiennes : environ 70 langues, parlées par plus de 215 millions de personnes en Inde, au Pakistan et au Sri Lanka. Le télougou, le kannada et le malayalam sont aussi des langues dravidiennes.",
+      "en": "Tamil belongs to the Dravidian family of languages: about 70 languages, spoken by more than 215 million people in India, Pakistan and Sri Lanka. Telugu, Kannada and Malayalam are Dravidian languages too.",
+      "sources": [
+        "https://www.britannica.com/topic/Dravidian-languages"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "nallur-temple",
+      "level": 2,
+      "fr": "À Jaffna, dans le nord du Sri Lanka, le temple de Nallur Kandaswamy est dédié à Murugan, que l'on vénère surtout sous la forme de sa lance, le vel. Sa grande fête dure 25 jours chaque année. Le temple actuel date de 1734.",
+      "en": "In Jaffna, in northern Sri Lanka, the Nallur Kandaswamy temple is dedicated to Murugan, who is worshipped mainly in the form of his spear, the vel. Its big festival lasts 25 days every year. The present temple dates from 1734.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Nallur_Kandaswamy_temple"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "mahabalipuram",
+      "level": 3,
+      "fr": "À Mahabalipuram, au bord de la mer, les rois pallava ont fait sculpter des temples dans la pierre il y a plus de 1 200 ans (VIIe et VIIIe siècles). Ce site est classé au patrimoine mondial de l'UNESCO depuis 1984.",
+      "en": "At Mahabalipuram, by the sea, the Pallava kings had temples carved in stone more than 1,200 years ago (7th and 8th centuries). The site has been a UNESCO World Heritage Site since 1984.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Group_of_Monuments_at_Mahabalipuram"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "tamil-official",
+      "level": 3,
+      "fr": "Le tamoul voyage autour de l'océan : c'est une langue officielle au Tamil Nadu et à Pondichéry (Inde), au Sri Lanka et à Singapour.",
+      "en": "Tamil has travelled around the ocean: it is an official language in Tamil Nadu and Puducherry (India), in Sri Lanka and in Singapore.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/ISO_639:ta"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "jaffna-kingdom",
+      "level": 3,
+      "fr": "À partir du XIIIe siècle, un royaume tamoul, le royaume de Jaffna, a duré environ quatre siècles dans le nord de l'île. Sa capitale était Nallur. Le dernier roi, Cankili II, a été capturé par les Portugais en 1619.",
+      "en": "From the 13th century, a Tamil kingdom, the Jaffna kingdom, lasted about four centuries in the north of the island. Its capital was Nallur. The last king, Cankili II, was captured by the Portuguese in 1619.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jaffna"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "five-landscapes",
+      "level": 4,
+      "fr": "Il y a très longtemps, les poètes tamouls (la littérature Sangam) imaginaient cinq paysages : la montagne (kurinji), la forêt (mullai), les champs (marutham), la côte (neithal) et la terre sèche (palai). Dans ce jeu, tu as déjà traversé des champs, une côte et des collines !",
+      "en": "A very long time ago, Tamil poets (the Sangam literature) imagined five landscapes: the mountains (kurinji), the forest (mullai), the fields (marutham), the coast (neithal) and the dry land (palai). In this game you have already crossed fields, a coast and hills!",
+      "sources": [
+        "https://www.outlooktraveller.com/amp/story/destinations/india/a-journey-through-the-five-landscapes-of-tamil-nadu"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "classical-language",
+      "level": 4,
+      "fr": "En 2004, le tamoul est devenu la première langue classique reconnue officiellement en Inde. Le Tolkappiyam, le plus ancien livre de grammaire tamoul qui nous soit parvenu, date peut-être du IIe siècle avant notre ère.",
+      "en": "In 2004, Tamil became the first language officially recognised as a classical language of India. The Tolkappiyam, the oldest Tamil grammar book that has survived, may date from as early as the 2nd century BCE.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/ISO_639:ta"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "jaffna-library",
+      "level": 4,
+      "fr": "La bibliothèque publique de Jaffna a ouvert en 1933. Au début des années 1980, elle gardait plus de 97 000 livres et manuscrits : c'était l'une des plus grandes bibliothèques d'Asie. Elle a été incendiée en 1981 et rénovée en 2001. Les livres sont précieux, il faut les protéger !",
+      "en": "The Jaffna Public Library was established in 1933. In the early 1980s it held more than 97,000 books and manuscripts: it was one of the biggest libraries in Asia. It was burned down in 1981 and renovated in 2001. Books are precious, we must protect them!",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Jaffna_Public_Library"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "thirukkural",
+      "level": 5,
+      "fr": "Le Tirukkural, attribué à Thiruvalluvar, est un livre de 1 330 couplets sur la vertu, la richesse et l'amour. Chaque couplet n'a que sept mots ! Il a été traduit dans au moins 57 langues.",
+      "en": "The Tirukkural, attributed to Thiruvalluvar, is a book of 1,330 couplets about virtue, wealth and love. Each couplet has only seven words! It has been translated into at least 57 languages.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Kural"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "tamil-brahmi",
+      "level": 5,
+      "fr": "Les plus anciennes inscriptions en écriture tamoule-brahmi datent d'environ 300 avant notre ère, il y a plus de 2 300 ans. Certains chercheurs pensent qu'elles sont encore plus anciennes, d'autres en doutent : l'histoire continue de se découvrir !",
+      "en": "The oldest inscriptions in Tamil-Brahmi writing date from around 300 BCE, more than 2,300 years ago. Some researchers think they are even older, others doubt it: history is still being discovered!",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Tamil-Brahmi"
+      ],
+      "status": "to be verified"
+    },
+    {
+      "id": "palmyra-odiyal",
+      "level": 5,
+      "fr": "À Jaffna, le palmyre est un arbre très important. Avec sa racine séchée (l'odiyal), on fait de la farine, pour préparer des plats traditionnels comme l'odiyal kool, le pittu ou des chips. Un vrai goût de Jaffna !",
+      "en": "In Jaffna, the palmyra palm is a very important tree. Its dried root (odiyal) is made into flour, used for traditional foods like odiyal kool, pittu or chips. A real taste of Jaffna!",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Odiyal",
+        "https://en.wikipedia.org/wiki/Jaffna"
+      ],
+      "status": "to be verified"
+    }
+  ]
+}

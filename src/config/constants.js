@@ -20,14 +20,16 @@ export const GAME = {
 };
 
 // Friendly, round-looking system fonts (no download needed, works offline).
-export const FONT = '"Trebuchet MS", "Segoe UI", Verdana, Arial, sans-serif';
+// "Noto Sans Tamil" is bundled with the game so Tamil letters show correctly on every device.
+export const FONT = '"Trebuchet MS", "Segoe UI", Verdana, Arial, "Noto Sans Tamil", sans-serif';
 
 // Learning part
 export const QUIZ = {
-  stationDifficulties: [1, 2, 2, 3], // one question per station: easy to harder
   gated: true, // a gate blocks the way until the question is answered
   pointsFirstTry: 50,
   pointsLater: 20,
-  blockSize: 84,
-  blockSpacing: 112,
+  blockHeight: 84,
+  minBlockWidth: 84,
+  maxBlockWidth: 150, // wider blocks for longer answers, such as Tamil phrases
+  blockGap: 28,
 };

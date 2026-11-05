@@ -7,8 +7,12 @@ import Hud from '../ui/Hud.js';
 import { showEndPanel } from '../ui/EndPanel.js';
 import QuestionBanner from '../ui/QuestionBanner.js';
 import QuestionStation from '../game/QuestionStation.js';
-import { QUESTIONS_KEY, QUESTIONS_URL } from '../config/content.js';
-import { isValidQuestionFile, pickQuestions, prepareQuestion } from '../content/questions.js';
+import { pickQuestions, prepareQuestion } from '../content/questions.js';
+import { queueSubject, collectSubject } from '../content/contentLoader.js';
+import { buildVocabQuestions } from '../content/vocabQuestions.js';
+import { SUBJECTS, DEFAULT_SUBJECT } from '../config/subjects.js';
+import { getSetting } from '../services/settings.js';
+import { playWordAudio, stopWordAudio } from '../services/wordAudio.js';
 import { t } from '../i18n/index.js';
 import { startMusic } from '../services/music.js';
 import { createMusicButton, createHomeButton } from '../ui/IconButtons.js';
@@ -19,8 +23,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    // (character pictures and music are loaded by the start screen)
-    this.load.json(QUESTIONS_KEY, QUESTIONS_URL);
+    // (character pictures, music and the content index are loaded by the start screen)
+    this.subject = SUBJECTS[getSetting('subject')] || SUBJECTS[DEFAULT_SUBJECT];
+    queueSubject(this, this.subject.id);
   }
 
   create() {
@@ -32,6 +37,7 @@ export default class GameScene extends Phaser.Scene {
     this.score = 0;
     this.lives = GAME.lives;
     this.checkpoint = { ...this.level.start }; // where to restart after a fall
+    this.spokenFor = null; // the station whose recording already played
     this.flashText = ''; // short message shown in the banner after a right answer
     this.flashUntil = 0;
     this.quizStats = { total: 0, firstTry: 0 };
@@ -85,12 +91,14 @@ export default class GameScene extends Phaser.Scene {
   buildStations() {
     this.stations = [];
     this.contentError = false;
-    const data = this.cache.json.get(QUESTIONS_KEY);
-    if (!isValidQuestionFile(data)) {
+    const content = collectSubject(this, this.subject.id);
+    // Questions written by hand, plus questions generated from vocabulary lists
+    const pool = [...content.questions, ...buildVocabQuestions(content.entries, content.categories, content.audio)];
+    if (pool.length === 0) {
       this.contentError = true; // the level stays playable, without questions
       return;
     }
-    const raw = pickQuestions(data.questions, QUIZ.stationDifficulties);
+    const raw = pickQuestions(pool, this.subject.difficulties);
     this.level.stations.slice(0, raw.length).forEach((def, i) => {
       const station = new QuestionStation(this, def, prepareQuestion(raw[i]), this.level.flag.groundY);
       this.stations.push(station);
@@ -132,8 +140,17 @@ export default class GameScene extends Phaser.Scene {
     }
     const x = this.player.x;
     const active = this.stations.find((s) => !s.solved && s.containsX(x));
-    if (active) this.banner.show(active.question.prompt, active.note);
-    else this.banner.hide();
+    if (!active) {
+      this.banner.hide();
+      this.spokenFor = null;
+      return;
+    }
+    const audio = active.question.audio;
+    this.banner.onSpeaker = () => playWordAudio(audio);
+    this.banner.show(active.question.prompt, active.note, '#c05621', Boolean(audio));
+    // The recording plays by itself the first time the question appears
+    if (audio && this.spokenFor !== active) playWordAudio(audio);
+    this.spokenFor = active;
   }
 
   buildCoins() {
@@ -187,6 +204,7 @@ export default class GameScene extends Phaser.Scene {
     const { total, firstTry } = this.quizStats;
     const quizLine = kind === 'won' && total > 0 ? t('win.quiz', { ok: firstTry, total }) : '';
     this.banner.hide();
+    stopWordAudio();
     showEndPanel(this, kind, this.score, quizLine, () => this.scene.restart());
   }
 

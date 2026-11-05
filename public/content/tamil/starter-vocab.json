@@ -1,0 +1,419 @@
+{
+ "meta": {
+  "subject": "tamil",
+  "reviewed": false,
+  "categories": {
+   "animals": {
+    "fr": "un animal",
+    "en": "an animal"
+   },
+   "family": {
+    "fr": "un membre de la famille",
+    "en": "a family member"
+   },
+   "numbers": {
+    "fr": "un nombre",
+    "en": "a number"
+   },
+   "colors": {
+    "fr": "une couleur",
+    "en": "a colour"
+   },
+   "food": {
+    "fr": "quelque chose à manger ou à boire",
+    "en": "something to eat or drink"
+   },
+   "greetings": {
+    "fr": "un mot de politesse",
+    "en": "a polite word"
+   },
+   "phrases": {
+    "fr": "une phrase de tous les jours",
+    "en": "an everyday phrase"
+   },
+   "commands": {
+    "fr": "un ordre (version « tu » ou « vous »)",
+    "en": "a command (\"you\" informal or polite)"
+   },
+   "pronouns": {
+    "fr": "un pronom (tu ou vous)",
+    "en": "a pronoun (informal or polite you)"
+   },
+   "possessives": {
+    "fr": "un mot qui dit à qui c'est",
+    "en": "a word that says whose it is"
+   },
+   "questions": {
+    "fr": "une question",
+    "en": "a question"
+   },
+   "sentences": {
+    "fr": "une phrase sur un animal",
+    "en": "a sentence about an animal"
+   }
+  },
+  "note": "Starter list drafted by Claude (not a native speaker). Spellings and pronunciation must be checked by a native speaker before any recording."
+ },
+ "entries": [
+  {
+   "id": "s-vanakkam",
+   "category": "greetings",
+   "ta-Latn": "vanakkam",
+   "ta-Taml": "வணக்கம்",
+   "fr": "Bonjour",
+   "en": "Hello",
+   "picture": "two hands joined, smiling face",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-nanri",
+   "category": "greetings",
+   "ta-Latn": "nanri",
+   "ta-Taml": "நன்றி",
+   "fr": "Merci",
+   "en": "Thank you",
+   "picture": "a child handing a flower, smiling",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-aam",
+   "category": "greetings",
+   "ta-Latn": "aam",
+   "ta-Taml": "ஆம்",
+   "fr": "Oui",
+   "en": "Yes",
+   "picture": "a nodding head",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-amma",
+   "category": "family",
+   "ta-Latn": "amma",
+   "ta-Taml": "அம்மா",
+   "fr": "Maman",
+   "en": "Mum",
+   "picture": "a smiling mother",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-appa",
+   "category": "family",
+   "ta-Latn": "appa",
+   "ta-Taml": "அப்பா",
+   "fr": "Papa",
+   "en": "Dad",
+   "picture": "a smiling father",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-annan",
+   "category": "family",
+   "ta-Latn": "annan",
+   "ta-Taml": "அண்ணன்",
+   "fr": "Grand frère",
+   "en": "Elder brother",
+   "picture": "an older boy waving",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-akka",
+   "category": "family",
+   "ta-Latn": "akka",
+   "ta-Taml": "அக்கா",
+   "fr": "Grande sœur",
+   "en": "Elder sister",
+   "picture": "an older girl waving",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-thaatha",
+   "category": "family",
+   "ta-Latn": "thaatha",
+   "ta-Taml": "தாத்தா",
+   "fr": "Grand-père",
+   "en": "Grandfather",
+   "picture": "an old man with a walking stick",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-paatti",
+   "category": "family",
+   "ta-Latn": "paatti",
+   "ta-Taml": "பாட்டி",
+   "fr": "Grand-mère",
+   "en": "Grandmother",
+   "picture": "an old woman with glasses",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-onru",
+   "category": "numbers",
+   "ta-Latn": "onru",
+   "ta-Taml": "ஒன்று",
+   "fr": "Un",
+   "en": "One",
+   "picture": "1 mango",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-irandu",
+   "category": "numbers",
+   "ta-Latn": "irandu",
+   "ta-Taml": "இரண்டு",
+   "fr": "Deux",
+   "en": "Two",
+   "picture": "2 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-moondru",
+   "category": "numbers",
+   "ta-Latn": "moondru",
+   "ta-Taml": "மூன்று",
+   "fr": "Trois",
+   "en": "Three",
+   "picture": "3 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-naangu",
+   "category": "numbers",
+   "ta-Latn": "naangu",
+   "ta-Taml": "நான்கு",
+   "fr": "Quatre",
+   "en": "Four",
+   "picture": "4 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-ainthu",
+   "category": "numbers",
+   "ta-Latn": "ainthu",
+   "ta-Taml": "ஐந்து",
+   "fr": "Cinq",
+   "en": "Five",
+   "picture": "5 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-aaru",
+   "category": "numbers",
+   "ta-Latn": "aaru",
+   "ta-Taml": "ஆறு",
+   "fr": "Six",
+   "en": "Six",
+   "picture": "6 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-ezhu",
+   "category": "numbers",
+   "ta-Latn": "ezhu",
+   "ta-Taml": "ஏழு",
+   "fr": "Sept",
+   "en": "Seven",
+   "picture": "7 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-ettu",
+   "category": "numbers",
+   "ta-Latn": "ettu",
+   "ta-Taml": "எட்டு",
+   "fr": "Huit",
+   "en": "Eight",
+   "picture": "8 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-onbathu",
+   "category": "numbers",
+   "ta-Latn": "onbathu",
+   "ta-Taml": "ஒன்பது",
+   "fr": "Neuf",
+   "en": "Nine",
+   "picture": "9 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-pathu",
+   "category": "numbers",
+   "ta-Latn": "pathu",
+   "ta-Taml": "பத்து",
+   "fr": "Dix",
+   "en": "Ten",
+   "picture": "10 mangoes",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-sivappu",
+   "category": "colors",
+   "ta-Latn": "sivappu",
+   "ta-Taml": "சிவப்பு",
+   "fr": "Rouge",
+   "en": "Red",
+   "picture": "a red balloon",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-neelam",
+   "category": "colors",
+   "ta-Latn": "neelam",
+   "ta-Taml": "நீலம்",
+   "fr": "Bleu",
+   "en": "Blue",
+   "picture": "a blue balloon",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-pachai",
+   "category": "colors",
+   "ta-Latn": "pachai",
+   "ta-Taml": "பச்சை",
+   "fr": "Vert",
+   "en": "Green",
+   "picture": "a green balloon",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-manjal",
+   "category": "colors",
+   "ta-Latn": "manjal",
+   "ta-Taml": "மஞ்சள்",
+   "fr": "Jaune",
+   "en": "Yellow",
+   "picture": "a yellow balloon",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-naai",
+   "category": "animals",
+   "ta-Latn": "naai",
+   "ta-Taml": "நாய்",
+   "fr": "Chien",
+   "en": "Dog",
+   "picture": "a friendly dog",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-poonai",
+   "category": "animals",
+   "ta-Latn": "poonai",
+   "ta-Taml": "பூனை",
+   "fr": "Chat",
+   "en": "Cat",
+   "picture": "a cat",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-yaanai",
+   "category": "animals",
+   "ta-Latn": "yaanai",
+   "ta-Taml": "யானை",
+   "fr": "Éléphant",
+   "en": "Elephant",
+   "picture": "an elephant",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-kili",
+   "category": "animals",
+   "ta-Latn": "kili",
+   "ta-Taml": "கிளி",
+   "fr": "Perroquet",
+   "en": "Parrot",
+   "picture": "a green parrot",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-saadham",
+   "category": "food",
+   "ta-Latn": "saadham",
+   "ta-Taml": "சாதம்",
+   "fr": "Riz",
+   "en": "Rice",
+   "picture": "a bowl of rice",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-thanneer",
+   "category": "food",
+   "ta-Latn": "thanneer",
+   "ta-Taml": "தண்ணீர்",
+   "fr": "Eau",
+   "en": "Water",
+   "picture": "a glass of water",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  },
+  {
+   "id": "s-paal",
+   "category": "food",
+   "ta-Latn": "paal",
+   "ta-Taml": "பால்",
+   "fr": "Lait",
+   "en": "Milk",
+   "picture": "a glass of milk",
+   "unit": "starter",
+   "source": "claude-draft",
+   "status": "to be verified"
+  }
+ ]
+}

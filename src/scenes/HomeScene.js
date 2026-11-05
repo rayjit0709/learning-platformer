@@ -5,9 +5,11 @@ import { MUSIC_KEY, MUSIC_URL, startMusic } from '../services/music.js';
 import { getSetting, setSetting } from '../services/settings.js';
 import { currentLang, t } from '../i18n/index.js';
 import { createMusicButton } from '../ui/IconButtons.js';
+import { INDEX_URL, QUESTIONS_INDEX_KEY } from '../config/content.js';
+import { SUBJECTS, DEFAULT_SUBJECT } from '../config/subjects.js';
 
-const CARD_Y = 298;
-const CARD_X = { boy: 330, girl: 630 };
+const CARD_Y = 332;
+const CARD_X = { boy: 345, girl: 615 };
 
 // First screen: choose the character, the language, then press Play.
 // (Profiles, level and subject pickers are added here in the next milestone.)
@@ -19,22 +21,24 @@ export default class HomeScene extends Phaser.Scene {
   preload() {
     for (const hero of Object.values(HEROES)) this.load.image(hero.textureKey, hero.url);
     this.load.audio(MUSIC_KEY, MUSIC_URL);
+    this.load.json(QUESTIONS_INDEX_KEY, INDEX_URL); // the list of content files (see scripts/build-content-index.js)
   }
 
   create() {
     this.cameras.main.setBackgroundColor('#8fd3ff');
     this.add.rectangle(GAME_WIDTH / 2, GAME_HEIGHT - 20, GAME_WIDTH, 40, 0x5a9e4b).setStrokeStyle(3, 0x3b6e30);
 
-    this.add.text(GAME_WIDTH / 2, 62, t('home.title'), {
-      fontFamily: FONT, fontSize: '54px', fontStyle: 'bold', color: '#ffffff', stroke: '#1a365d', strokeThickness: 8,
+    this.add.text(GAME_WIDTH / 2, 52, t('home.title'), {
+      fontFamily: FONT, fontSize: '48px', fontStyle: 'bold', color: '#ffffff', stroke: '#1a365d', strokeThickness: 8,
     }).setOrigin(0.5);
-    this.add.text(GAME_WIDTH / 2, 122, t('home.choose'), {
-      fontFamily: FONT, fontSize: '30px', fontStyle: 'bold', color: '#1a365d',
+    this.add.text(GAME_WIDTH / 2, 172, t('home.choose'), {
+      fontFamily: FONT, fontSize: '28px', fontStyle: 'bold', color: '#1a365d',
     }).setOrigin(0.5);
 
     this.selected = chosenHero().id;
     this.cards = {};
     for (const hero of Object.values(HEROES)) this.makeCard(hero);
+    this.makeSubjectChips();
     this.makeLanguageButtons();
     this.makePlayButton();
     createMusicButton(this, 40, 40);
@@ -49,13 +53,32 @@ export default class HomeScene extends Phaser.Scene {
     this.input.keyboard.on('keydown-SPACE', () => this.play());
   }
 
+  // Which subject to play: Tamil or Maths
+  makeSubjectChips() {
+    const chosen = getSetting('subject') in SUBJECTS ? getSetting('subject') : DEFAULT_SUBJECT;
+    Object.values(SUBJECTS).forEach((subject, i) => {
+      const x = GAME_WIDTH / 2 + (i === 0 ? -120 : 120);
+      const on = subject.id === chosen;
+      const chip = this.add.rectangle(x, 116, 210, 52, on ? 0xdd6b20 : 0xffffff, on ? 1 : 0.9)
+        .setStrokeStyle(4, 0x7b341e).setInteractive({ useHandCursor: true });
+      this.add.text(x, 116, t(subject.labelKey), {
+        fontFamily: FONT, fontSize: '28px', fontStyle: 'bold', color: on ? '#ffffff' : '#7b341e',
+      }).setOrigin(0.5);
+      chip.on('pointerup', () => {
+        if (subject.id === getSetting('subject')) return;
+        setSetting('subject', subject.id);
+        this.scene.restart();
+      });
+    });
+  }
+
   makeCard(hero) {
     const x = CARD_X[hero.id];
-    const frame = this.add.rectangle(x, CARD_Y, 230, 290, 0xffffff, 0.92).setStrokeStyle(6, 0xcbd5e0)
+    const frame = this.add.rectangle(x, CARD_Y, 220, 240, 0xffffff, 0.92).setStrokeStyle(6, 0xcbd5e0)
       .setInteractive({ useHandCursor: true });
-    const picture = this.add.image(x, CARD_Y - 15, hero.textureKey).setScale(0.55);
-    const label = this.add.text(x, CARD_Y + 118, t(`hero.${hero.id}`), {
-      fontFamily: FONT, fontSize: '28px', fontStyle: 'bold', color: '#2d3748',
+    const picture = this.add.image(x, CARD_Y - 14, hero.textureKey).setScale(0.5);
+    const label = this.add.text(x, CARD_Y + 96, t(`hero.${hero.id}`), {
+      fontFamily: FONT, fontSize: '26px', fontStyle: 'bold', color: '#2d3748',
     }).setOrigin(0.5);
     frame.on('pointerup', () => this.select(hero.id));
     this.cards[hero.id] = { frame, picture, label };
@@ -71,7 +94,7 @@ export default class HomeScene extends Phaser.Scene {
     for (const [id, card] of Object.entries(this.cards)) {
       const on = id === this.selected;
       card.frame.setStrokeStyle(on ? 10 : 6, on ? 0x38a169 : 0xcbd5e0);
-      this.tweens.add({ targets: card.picture, scale: on ? 0.6 : 0.5, duration: 150 });
+      this.tweens.add({ targets: card.picture, scale: on ? 0.55 : 0.45, duration: 150 });
     }
   }
 

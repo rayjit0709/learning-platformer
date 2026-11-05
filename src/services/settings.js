@@ -1,7 +1,7 @@
-// Settings remembered on this device (language, character, music on/off).
+// Settings remembered on this device (language, character, subject, music on/off).
 // Stored in localStorage under one versioned key, so future changes can migrate old saves.
 const KEY = 'lp.settings.v1';
-const DEFAULTS = { lang: 'fr', hero: 'boy', musicOn: true };
+const DEFAULTS = { lang: 'fr', hero: 'boy', musicOn: true, subject: 'tamil' };
 let cache = null;
 
 function load() {

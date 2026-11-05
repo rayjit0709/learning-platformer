@@ -1,4 +1,6 @@
-// Where the question file lives. Later milestones choose it from the player's
-// level and subject; for now there is one file (Cycle 2 math).
-export const QUESTIONS_KEY = 'questions';
-export const QUESTIONS_URL = `${import.meta.env.BASE_URL}content/primaire-c2/math/addition-subtraction.json`;
+// Helpers to find content files. Files are listed in public/content/index.json (generated).
+export const QUESTIONS_INDEX_KEY = 'content-index';
+export const INDEX_URL = `${import.meta.env.BASE_URL}content/index.json`;
+
+export const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`;
+export const fileKey = (path) => `content:${path}`;
