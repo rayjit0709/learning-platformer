@@ -1,5 +1,5 @@
 {
- "version": 1,
+ "version": 2,
  "files": [
   {
    "path": "content/culture/facts.json",
@@ -32,5 +32,9 @@
    "pack": null
   }
  ],
- "audio": {}
+ "audio": {
+  "in": {},
+  "lk": {},
+  "family": {}
+ }
 }

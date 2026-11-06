@@ -1,4 +1,5 @@
-import musicUrl from '../assets/music/theme.mp3';
+// The loop is made by tools/make-music-tamil.py (raga Mohanam, flute and veena). The earlier loop, theme.mp3, is kept but unused.
+import musicUrl from '../assets/music/theme-tamil.mp3';
 import { getSetting, setSetting } from './settings.js';
 
 export const MUSIC_KEY = 'music-theme';

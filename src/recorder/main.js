@@ -22,7 +22,7 @@ let status = { text: '', kind: '' };
 // ---------- loading the word list (same files and same duplicate rule as the game) ----------
 async function loadWords() {
   const list = await (await fetch(INDEX_URL)).json();
-  inGame = list.audio || {};
+  inGame = (list.audio && list.audio.family) || {}; // clips recorded by a person (not the generated voices)
   const entries = [];
   for (const file of list.files.filter((f) => f.type === 'vocab' && f.subject === 'tamil')) {
     try {
@@ -180,7 +180,7 @@ async function download() {
   for (const w of words) {
     const blob = recordings.get(w.id);
     if (!blob) continue;
-    const name = w.pack ? `content/packs/${w.pack}/audio/${w.id}.wav` : `audio/ta/${w.id}.wav`;
+    const name = w.pack ? `content/packs/${w.pack}/audio/family/${w.id}.wav` : `audio/ta/family/${w.id}.wav`;
     files.push({ name, data: new Uint8Array(await blob.arrayBuffer()) });
   }
   if (files.length === 0) { setStatus(t('rec.nothing'), 'bad'); return; }

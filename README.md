@@ -31,8 +31,25 @@ Set `"reviewed": true` in a file's `meta` once a teacher or parent has checked i
 ## Recording the words (voice recorder)
 1. Run `npm run dev` and open `http://localhost:5173/recorder.html` (the microphone only works on `localhost` or an `https` address, so not on a phone through the Wi-Fi address). On the public site, `/recorder.html` also works on a phone, but it only lists the 30 starter words (the class pack stays private).
 2. A native speaker records each word (Record, say it alone, Stop, Listen, Erase and redo if needed). Clips stay in that browser until downloaded.
-3. Press "Download the recordings (.zip)", then in the project folder run `unzip -o ~/Downloads/recordings.zip -d public` and restart `npm run dev`. Class-pack words go to the private pack folder; starter words go to `public/audio/ta/` (those can be pushed to GitHub).
+3. Press "Download the recordings (.zip)", then in the project folder run `unzip -o ~/Downloads/recordings.zip -d public` and restart `npm run dev`. Class-pack words go to the private pack folder; starter words go to `public/audio/ta/family/` (those can be pushed to GitHub).
 4. Files are WAV (16 kHz, mono). An `.mp3` with the same name wins over a `.wav` if you prefer to convert them.
+
+## Spoken Tamil: voices and accents
+Clips live in folders by voice: `public/audio/ta/in/` (India, voice Pallavi), `public/audio/ta/lk/` (Sri Lanka, voice Saranya) and `public/audio/ta/family/` (recorded by a person with the recorder page). Class-pack words use `public/content/packs/<pack>/audio/<voice>/` (private). The game plays the voice chosen on the level screen; if a word has no clip in that voice it uses a family recording, then the other accent.
+
+To make the Indian and Sri Lankan voices:
+1. Create a free Azure account, then a "Speech" resource (pricing tier "Free F0" if offered). Copy one of its keys and its region (for example `francecentral`).
+2. In the terminal, in the project folder (the key stays in that terminal window only, never in a file):
+```
+export AZURE_SPEECH_KEY="your-key"
+export AZURE_SPEECH_REGION="your-region"
+node tools/make-voices.js --dry-run
+node tools/make-voices.js
+```
+`--dry-run` only lists what would be made. Clips that already exist are skipped, so you can run it again after a failure. Options: `--voices=in`, `--only=naai,nee`, `--force`, `--rate=-15%` (speed).
+3. Run `npm run dev` and listen. A Tamil speaker should check the clips; for a clip that sounds wrong, record it with the recorder page (saved as `family`) and delete the wrong generated clip: the game uses a `family` recording whenever the chosen accent has no clip for that word.
+
+Generated voices come from Microsoft Azure neural text to speech: mention it in CREDITS (already done) and keep the "to be verified" status until a Tamil speaker has listened.
 
 ## Culture facts
 - `public/content/culture/facts.json` holds the "Did you know?" cards: `level` (1 to 5), `fr`, `en`, `sources` (web addresses) and `status`. Keep each text under about 330 characters so it fits the card. After a win, a fact for that level not yet shown on this device appears first.
@@ -50,8 +67,8 @@ Set `"reviewed": true` in a file's `meta` once a teacher or parent has checked i
 - `?hero=girl` forces the girl character; `?lang=en` forces English (normally the start screen remembers your choice); `?touch=1` shows the touch buttons on a computer. Combine them with `&`, for example `?lang=en&hero=girl`.
 
 ## Music
-`src/assets/music/theme.mp3` is an original 16-bar loop composed in code: `python3 tools/make-music.py` re-creates it (needs Python, numpy and ffmpeg).
-To use your own track instead, replace that file with another mp3 of the same name.
+`src/assets/music/theme-tamil.mp3` is the game's loop: an original piece in Carnatic raga Mohanam (bansuri-like flute, veena-like string, tanpura drone, mridangam-like drum, adi talam), about 53 seconds, composed and synthesized in code. `python3 tools/make-music-tamil.py` re-creates it (needs Python, numpy, scipy and ffmpeg). The synthesized sound imitates the instruments; a recording by a real musician would sound richer.
+To use another track, replace that file, or change the import in `src/services/music.js`. The earlier loop `theme.mp3` (made by `tools/make-music.py`) is still in the folder, unused.
 
 ## Tech
 Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
@@ -67,6 +84,8 @@ Phaser 4 (game engine), Vite (dev server and build), plain JavaScript.
 - [x] **S1** South Indian look, all drawn in code: village and paddy fields, temple town with gopurams, sea coast, hills and tea gardens, night of oil lamps (one per level); temple-style striped borders on the ground
 - [x] **C1** "Did you know?" card after each win (Tamil and Dravidian culture and history, three facts per level in French and English, with sources, shown in turn; including Sri Lankan (Eelam) Tamil culture and history)
 - [x] **T2** Voice recorder: open `recorder.html` (on your computer: `http://localhost:5173/recorder.html` while `npm run dev` runs). It shows each word, you press Record, say it, press Stop; it trims the silence and keeps the clip on the device. "Download" gives a `recordings.zip` to unzip into `public`; words with a recording then get a speaker button and "listen and choose" questions
+- [x] **V1** Choice of Tamil accent (India or Sri Lanka/Eelam, one female voice each) on the level screen, once clips exist; `tools/make-voices.js` makes the clips with Azure neural voices (needs a free Azure Speech key); clips recorded by a person are the fallback
+- [x] **MU** Background music in a Tamil / South Indian style: original loop in raga Mohanam (flute, veena, tanpura, mridangam-like drum)
 - [ ] T3 More Tamil game types: matching, listen-and-repeat, "Jacques a dit" commands level
 - [ ] T4 Pictures for the words (original art or free-licensed packs)
 - [ ] M4 Full home screen: level, subject, language, FR/EN switch, 2-5 profiles

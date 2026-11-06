@@ -54,5 +54,7 @@
   "rec.nothing": "There is nothing to download yet.",
   "rec.after": "To add the recordings to the game, unzip the .zip into the project's \"public\" folder:",
   "rec.word": "Word {n} of {total}",
-  "rec.hasRecording": "Recorded"
+  "rec.hasRecording": "Recorded",
+  "accent.in": "Voice: India",
+  "accent.lk": "Voice: Sri Lanka"
 }

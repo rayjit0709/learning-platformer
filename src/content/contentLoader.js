@@ -1,4 +1,5 @@
 import { QUESTIONS_INDEX_KEY, fileKey, assetUrl } from '../config/content.js';
+import { chosenAccent, resolveAudio } from '../config/voices.js';
 
 // The index lists every content file that exists (see scripts/build-content-index.js).
 export function readIndex(scene) {
@@ -31,7 +32,7 @@ export function collectSubject(scene, subject) {
     }
   }
   entries.sort((a, b) => Number(Boolean(b.pack)) - Number(Boolean(a.pack)));
-  const audio = Object.fromEntries(Object.entries(index.audio || {}).map(([id, path]) => [id, assetUrl(path)]));
+  const audio = Object.fromEntries(Object.entries(resolveAudio(index.audio, chosenAccent())).map(([id, path]) => [id, assetUrl(path)]));
   return { questions, entries: dedupe(entries), categories, audio };
 }
 

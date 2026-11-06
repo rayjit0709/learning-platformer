@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
 import { GAME_WIDTH, GAME_HEIGHT, FONT } from '../config/constants.js';
 import { SUBJECTS, DEFAULT_SUBJECT } from '../config/subjects.js';
-import { getSetting } from '../services/settings.js';
+import { getSetting, setSetting } from '../services/settings.js';
+import { ACCENTS, chosenAccent, hasAccentVoices } from '../config/voices.js';
+import { readIndex } from '../content/contentLoader.js';
 import { getStars, isUnlocked } from '../services/progress.js';
 import { LEVEL_COUNT } from '../game/levelData.js';
 import { t } from '../i18n/index.js';
@@ -30,9 +32,12 @@ export default class LevelSelectScene extends Phaser.Scene {
     this.add.text(GAME_WIDTH / 2, 112, t(this.subject.labelKey), {
       fontFamily: FONT, fontSize: '30px', fontStyle: 'bold', color: '#7b341e',
     }).setOrigin(0.5);
+    this.add.rectangle(GAME_WIDTH / 2, 440, 600, 40, 0xffffff, 0.75);
     this.add.text(GAME_WIDTH / 2, 440, t('level.hint'), { fontFamily: FONT, fontSize: '24px', color: '#1a365d' }).setOrigin(0.5);
     createMusicButton(this, GAME_WIDTH - 40, 40);
     createHomeButton(this, 40, 40, () => this.scene.start('HomeScene'));
+
+    this.makeAccentChips();
 
     const total = LEVEL_COUNT * BUTTON + (LEVEL_COUNT - 1) * GAP;
     this.buttons = [];
@@ -48,6 +53,26 @@ export default class LevelSelectScene extends Phaser.Scene {
     this.input.keyboard.on('keydown-RIGHT', () => this.move(1));
     this.input.keyboard.on('keydown-ENTER', () => this.start(this.buttons[this.index]));
     this.input.keyboard.on('keydown-SPACE', () => this.start(this.buttons[this.index]));
+  }
+
+  // Tamil only: choose the accent of the spoken words (shown once generated voices exist)
+  makeAccentChips() {
+    if (this.subject.id !== 'tamil' || !hasAccentVoices(readIndex(this).audio)) return;
+    const chosen = chosenAccent();
+    ACCENTS.forEach((accent, i) => {
+      const x = GAME_WIDTH / 2 + (i === 0 ? -125 : 125);
+      const on = accent.id === chosen;
+      const chip = this.add.rectangle(x, 172, 230, 44, on ? 0xdd6b20 : 0xffffff, on ? 1 : 0.92)
+        .setStrokeStyle(4, 0x7b341e).setInteractive({ useHandCursor: true });
+      this.add.text(x, 172, t(accent.labelKey), {
+        fontFamily: FONT, fontSize: '24px', fontStyle: 'bold', color: on ? '#ffffff' : '#7b341e',
+      }).setOrigin(0.5);
+      chip.on('pointerup', () => {
+        if (accent.id === chosenAccent()) return;
+        setSetting('accent', accent.id);
+        this.scene.restart();
+      });
+    });
   }
 
   makeButton(n, x) {

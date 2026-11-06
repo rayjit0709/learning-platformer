@@ -54,5 +54,7 @@
   "rec.nothing": "Il n'y a encore rien à télécharger.",
   "rec.after": "Pour ajouter les enregistrements au jeu, décompresse le .zip dans le dossier « public » du projet :",
   "rec.word": "Mot {n} sur {total}",
-  "rec.hasRecording": "Enregistré"
+  "rec.hasRecording": "Enregistré",
+  "accent.in": "Voix : Inde",
+  "accent.lk": "Voix : Sri Lanka"
 }

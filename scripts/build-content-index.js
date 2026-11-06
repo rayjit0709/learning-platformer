@@ -25,15 +25,25 @@ for (const full of walkContent()) {
   files.push({ path, type, subject: data.meta.subject, pack });
 }
 
-// Word recordings: public/audio/ta/<id>.mp3, and <pack>/audio/<id>.mp3 inside a pack (the pack wins).
-const audio = {};
-function addAudio(folder, urlBase) {
+// Word recordings, grouped by voice: "in" (generated Indian Tamil voice), "lk" (generated Sri Lankan Tamil voice)
+// and "family" (recorded by a person, with the recorder page).
+// Layout: <audio folder>/<voice>/<id>.mp3 or .wav. Files placed directly in the folder count as "family".
+// The audio folders are public/audio/ta and <pack>/audio. A pack's file wins over a public one for the same voice and word.
+// Inside one folder, an .mp3 wins over a .wav of the same word.
+const VOICES = ['in', 'lk', 'family'];
+const audio = Object.fromEntries(VOICES.map((v) => [v, {}]));
+function readVoiceFolder(folder, urlBase, voice) {
   if (!existsSync(folder)) return;
+  const found = {};
   for (const name of readdirSync(folder)) {
-    // .mp3 or .wav (the recorder page makes .wav). If both exist for a word, the .mp3 wins.
     const match = name.match(/^(.+)\.(mp3|wav)$/);
-    if (match && !(match[2] === 'wav' && audio[match[1]]?.endsWith('.mp3'))) audio[match[1]] = `${urlBase}/${name}`;
+    if (match && !(match[2] === 'wav' && found[match[1]]?.endsWith('.mp3'))) found[match[1]] = `${urlBase}/${name}`;
   }
+  Object.assign(audio[voice], found);
+}
+function addAudio(folder, urlBase) {
+  readVoiceFolder(folder, urlBase, 'family');
+  for (const voice of VOICES) readVoiceFolder(join(folder, voice), `${urlBase}/${voice}`, voice);
 }
 addAudio(join(PUBLIC_DIR, 'audio', 'ta'), 'audio/ta');
 const packsDir = join(CONTENT_DIR, 'packs');
@@ -41,5 +51,6 @@ if (existsSync(packsDir)) {
   for (const pack of readdirSync(packsDir)) addAudio(join(packsDir, pack, 'audio'), `content/packs/${pack}/audio`);
 }
 
-writeFileSync(join(CONTENT_DIR, 'index.json'), JSON.stringify({ version: 1, files, audio }, null, 1));
-console.log(`Content index: ${files.length} file(s), ${Object.keys(audio).length} recording(s).`);
+writeFileSync(join(CONTENT_DIR, 'index.json'), JSON.stringify({ version: 2, files, audio }, null, 1));
+const counts = VOICES.map((v) => `${v}: ${Object.keys(audio[v]).length}`).join(', ');
+console.log(`Content index: ${files.length} file(s); recordings per voice (${counts}).`);
